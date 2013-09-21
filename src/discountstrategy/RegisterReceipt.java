@@ -3,15 +3,19 @@
  * and open the template in the editor.
  */
 package discountstrategy;
+import java.text.*;
 
 /**
  *
  * @author Liz Ife Van Deslunt
  */
 public class RegisterReceipt implements Receipt{
-    private final String headerRow = "ITEM #\t DESCR\t UNIT PRICE\t QTY\t"
-            + "DISCOUNT RATE\t TOTAL";
+    private final String headerRow = "ITEM #\t DESCR\t\t UNIT PRICE\t "
+            + "QTY\t TOTAL\t DISCOUNT RATE\t FINAL TOTAL";
+    private final String tabsForTotals = "\nGRAND TOTALS: \t\t\t\t\t" ;
     
+    private NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
+    private NumberFormat percentFormatter = NumberFormat.getPercentInstance();
     private Customer customer;
     private LineItem[] lineItems;
     
@@ -54,24 +58,46 @@ public class RegisterReceipt implements Receipt{
       
         printOut = printOut + "\n" + headerRow;
         
-        printOut = printOut + addLineItemsToPrintOut(printOut);
+        //add line items
+        printOut = printOut + addLineItemsToPrintOut();
         
+        //create grand totals
+        printOut = printOut + addGrandTotals();
         return printOut;
     }
     
-    private String addLineItemsToPrintOut(String printOut){
-        System.out.println("-----------------");
+    private String addLineItemsToPrintOut(){
+        String lines = "\n";
         for(int i = 0; i < lineItems.length; i++){
             LineItem curr = lineItems[i];
-            printOut = printOut + 
+            lines = lines + 
                     curr.getProductNumber() + "\t" +
                     curr.getProdDescription() + "\t" +
-                    curr.getUndiscountedPrice() + "\t" +
-                    curr.getDiscountRate() + "\t" +
-                    curr.getFinalPrice() + "\n";
+                    moneyFormatter.format(curr.getUnitPrice()) + "\t" +
+                    curr.getQuantity() + "\t" +
+                    moneyFormatter.format(curr.getUndiscountedPrice()) + "\t" +
+                    percentFormatter.format(curr.getDiscountRate()) + "\t\t" +
+                    moneyFormatter.format(curr.getFinalPrice()) + "\n";
             
         }
-        return printOut;
+        return lines;
+    }
+    
+    private String addGrandTotals(){
+        double undiscountedTotal = 0;
+        double finalTotal = 0;
+        for(int i = 0; i < lineItems.length; i++){
+            LineItem curr = lineItems[i];
+            undiscountedTotal += curr.getUndiscountedPrice();
+            finalTotal += curr.getFinalPrice();
+        }
+        
+        double amountSaved = undiscountedTotal - finalTotal;
+        String totals =  tabsForTotals + moneyFormatter.format(undiscountedTotal) 
+                + "\t\t" + moneyFormatter.format(amountSaved) + "\t"
+                + moneyFormatter.format(finalTotal);
+        
+        return totals;
     }
    
 }

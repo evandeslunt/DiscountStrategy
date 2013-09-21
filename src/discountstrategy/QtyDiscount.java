@@ -14,17 +14,20 @@ public class QtyDiscount implements Discount {
 
     public final String RATE_ERR = "Please enter a value between 0 and 1.";
     public final String NUM_ITEMS_ERR = "Please enter a number greater than 1.";
+    public final double NO_DISCOUNT = 0.00;
     
     private double discountRate;
     private int minNumItems;
+    private int actualNumItems;
     
     /**
      * Creates a new QtyDiscount.
      * @param discountRate The discount rate, a value between 0 and 1.
      */
-    public QtyDiscount(double discountRate, int minNumItems){
+    public QtyDiscount(double discountRate, int minNumItems, int actualNumItems){
         setDiscountRate(discountRate);
         setMinNumItems(minNumItems);
+        setActualNumItems(actualNumItems);
     }
     
     // setters
@@ -34,6 +37,7 @@ public class QtyDiscount implements Discount {
      * Sets the discount rate to a percentage.
      * @param discount The discount percentage, a number between 0 and 1.
      */
+    @Override
     public final void setDiscountRate(double discount){
         if(discount < 0 || discount > 1){
             throw new IllegalArgumentException(RATE_ERR);
@@ -53,12 +57,22 @@ public class QtyDiscount implements Discount {
         this.minNumItems = num;
     }
     
+    public final void setActualNumItems(int num){
+         if(num <= 0){
+            throw new IllegalArgumentException();
+        }
+        this.actualNumItems = num;
+    }
     
     // getters
     
     @Override
     public final double getDiscountRate(){
-        return discountRate;
+        if(actualNumItems < minNumItems){
+            return NO_DISCOUNT;
+        } else{
+            return discountRate;
+        }
     }
     
     

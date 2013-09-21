@@ -29,6 +29,10 @@ public class LineItem {
         return product.getDescription();
     }
     
+    public final double getUnitPrice(){
+        return product.getPrice();
+    }
+    
     /**
      * Returns the undiscounted price of the item(s).
      * @return 
@@ -51,6 +55,10 @@ public class LineItem {
      */
     public final double getFinalPrice(){
         return getUndiscountedPrice() * (1 - getDiscountRate());
+    }
+    
+    public final int getQuantity(){
+        return quantity;
     }
     
     
