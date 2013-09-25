@@ -11,8 +11,11 @@ package discountstrategy;
 public interface Receipt {
     
     public void printReceipt();
-    public void setLineItems(LineItem[] lineItems);
-    public void setCustomer(Customer customer);
+    public void setCustomer(int customerID);
+    public void addProductToReceipt(int prodID, int qty);
+    
+    public void setDatabase(Database db);
+    public Database getDatabase();
     
     
 }

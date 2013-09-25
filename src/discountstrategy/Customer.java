@@ -14,20 +14,54 @@ public class Customer {
     private final String FIRST_NAME_ERR = "Please enter a first name.";
     private final String LAST_NAME_ERR = "Please enter a last name.";
     
+    private final int INIT_ARRAY_SIZE = 1;
+    
     private int customerID;
     private String firstName;
     private String lastName;
+    private Address[] shippingAddresses = new Address[INIT_ARRAY_SIZE];
+    private Address[] billingAddresses = new Address[INIT_ARRAY_SIZE];
     
-    private Discount discount; //preferred customers receive an additional discount
     
-    
-    public Customer(int customerID, String fName, String lName, Discount discount){
+    /**
+     * Constructor without an address (e.g., for in-store customers)
+     */
+    public Customer(int customerID, String fName, String lName){
         setCustomerID(customerID);
         setFirstName(fName);
         setLastName(lName);
-        setDiscount(discount);
+    }
+    
+    /**
+     * Constructor with a single ship-to and single bill-to address
+     */
+    public Customer(int customerID, String fName, String lName, Address shipTo, 
+            Address billTo){
+        setCustomerID(customerID);
+        setFirstName(fName);
+        setLastName(lName);
+        addShippingAddress(shipTo);
+        addBillingAddress(billTo);
+    }
+    
+     /**
+     * Constructor with multiple ship-to and bill-to addresses
+     */
+    public Customer(int customerID, String fName, String lName, Address[] shipTo, 
+            Address[] billTo){
+        setCustomerID(customerID);
+        setFirstName(fName);
+        setLastName(lName);
+        for(int i = 0; i < shipTo.length; i++){
+            addShippingAddress(shipTo[i]);
+        }
+        for(int i = 0; i < billTo.length; i++){
+            addBillingAddress(billTo[i]);
+        }
     }
 
+    // getters
+    
     public final int getCustomrID() {
         return customerID;
     }
@@ -40,8 +74,16 @@ public class Customer {
         return lastName;
     }
     
-    public final Discount getDiscount(){
-        return discount;
+    public final String getFullName(){
+        return firstName + " " + lastName;
+    }
+    
+    public final Address[] getShippingAddresses(){
+        return shippingAddresses;
+    }
+    
+    public final Address[] getBillingAddresses(){
+        return billingAddresses;
     }
 
     
@@ -72,12 +114,51 @@ public class Customer {
        this.lastName = lastName;
     }
     
-    public final void setDiscount(Discount d){
-        if(d == null){
+    public final void addShippingAddress(Address address){
+        if(address == null){
             throw new NullPointerException();
         }
-        discount = d;
+        add(shippingAddresses, address);
     }
     
+    public final void addBillingAddress(Address address){
+        if(address == null){
+            throw new NullPointerException();
+        }
+        add(billingAddresses, address);
+    }
+    
+    
+    //private helper methods
+    
+      /**
+       * Adds an object to the specified array. Resizes the array if necessary.
+       * @param array 
+       * @param o 
+       */
+    private void add(Object[] array, Object o){
+        if(o == null){
+            throw new NullPointerException();
+        }
+        if(array[array.length - 1] == null){
+            expandArray(array);
+        }
+        array[array.length - 1] = o;
+    }
+    
+    
+    /**
+     * Manual array resize. Adds one extra slot to the end of the array.
+     * @param array The array to resize
+     */
+    private Object[] expandArray(Object[] array){
+        Object[] tmp = new Object[array.length + 1];
+        
+        for(int i = 0; i < array.length; i++){
+            tmp[i] = array[i];
+        }
+        
+        return tmp;
+    }
     
 }

@@ -9,43 +9,39 @@ package discountstrategy;
  * @author Liz Ife Van Deslunt
  */
 public class JavaDatabase implements Database{
-    private final String FIND_ERR = "There was an error finding the requested object";
+    private final String CUST_ID_ERR = "Please enter a valid customer ID";
+    private final String PROD_ID_ERR = "Please enter a valid product ID";
     
-    private final int INIT_PRODUCT_ARRAY_SIZE = 1;
-    private final int INIT_CUSTOMER_ARRAY_SIZE = 1;
-     
-    private Product[] products;
-    private Customer[] customers;
+     private USAddress garyAddress = new USAddress("Gary Zivney", "21590 Davidson Drive", 
+             "Waukesha", "WI", "53188");
+    private Product[] products = 
+        { new ClothingProduct(1000, "Women's black boots",79.99, new  FlatRateDiscount(.1))
+         ,new ClothingProduct(1001, "Men's black boots", 64.99, new FlatRateDiscount(.1))
+         ,new ClothingProduct(1002, "Women's brown boots",79.99, new FlatRateDiscount(.15))
+         ,new ClothingProduct(1003, "Women's dress shoes", 59.99, new NoDiscount())
+         ,new ClothingProduct(1004, "Men's dress shoes", 39.99, new NoDiscount())};
+    private Customer[] customers = {  new Customer(100, "Gary", "Zivney", garyAddress, garyAddress)
+                                    , new Customer(101, "Becca", "Emrick")
+                                    , new Customer(102, "Ife", "Van Deslunt")};
     
     
     /**
      * Constructor that creates the customer and product arrays.
      */
-    public JavaDatabase(){
-        products = new Product[INIT_PRODUCT_ARRAY_SIZE];
-        customers = new Customer[INIT_CUSTOMER_ARRAY_SIZE];
+    public JavaDatabase(){    
+    
     }
     
-    /**
-     * Constructor that lets you pass in arrays.
-     * @param p 
-     */
-    public JavaDatabase(Product[] p, Customer[] c){
-       setProductList(p);
-       setCustomerList(c);
-    }
-         
     
-    //customer methods
         /**
          * Returns the customer with the given customerID, or null if not found.
-         * @param customerID
+         * @param customerID An integer greater than or equal to 0
          * @return 
          */
         @Override
         public final Customer findCustomer(int customerID) {
            if(customerID < 0){
-               throw new IllegalArgumentException();
+               throw new IllegalArgumentException(CUST_ID_ERR);
            }
            for(Customer customer : customers){
                if(customer.getCustomrID() == customerID){
@@ -55,6 +51,29 @@ public class JavaDatabase implements Database{
            return null;
         }
         
+        
+        /**
+          * Returns the product with the given productID, or null if not found.
+          * @param productID
+          * @return 
+          */
+        @Override
+        public final Product findProduct(int productID){
+            if(productID < 0){
+                throw new IllegalArgumentException(PROD_ID_ERR);
+            } 
+            for(Product prod : products){
+                if(prod.getItemNumber() == productID){
+                    return prod;
+                }
+            }
+            
+            return null;
+            
+      }
+        
+        
+        //additional methods to provide flexibility for adding customers/products
         @Override
         public final void addCustomer(Customer c){
             if(c == null){
@@ -78,27 +97,7 @@ public class JavaDatabase implements Database{
          }
          
          
-         //product methods
-        
-         /**
-          * Returns the product with the given productID, or null if not found.
-          * @param productID
-          * @return 
-          */
-        @Override
-        public final Product findProduct(int productID){
-            if(productID < 0){
-                throw new IllegalArgumentException();
-            } 
-            for(Product prod : products){
-                if(prod.getItemNumber() == productID){
-                    return prod;
-                }
-            }
-            
-            return null;
-            
-      }
+  
         
       @Override
       public final void addProduct(Product p){
