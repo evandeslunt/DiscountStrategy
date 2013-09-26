@@ -14,7 +14,9 @@ public class Startup {
        
        
        Database db = new JavaDatabase();
-       Register reg = new Register(100);
+       Register reg = new Register(101);
+       
+       reg.changeReceiptType(new OnlineReceipt(101, 0, 0));
        
        reg.addProductToReceipt(1000, 3);
        reg.addProductToReceipt(1001, 1);

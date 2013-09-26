@@ -12,8 +12,10 @@ public class JavaDatabase implements Database{
     private final String CUST_ID_ERR = "Please enter a valid customer ID";
     private final String PROD_ID_ERR = "Please enter a valid product ID";
     
-     private USAddress garyAddress = new USAddress("Gary Zivney", "21590 Davidson Drive", 
+     private USAddress garyAddress = new USAddress("Gary Zivney", "123 Easy Street", 
              "Waukesha", "WI", "53188");
+     private USAddress beccaAddress = new USAddress("Becca Emrick", "123 University Ave",  
+             "Apartment 1", "Madison", "WI", "53703");
     private Product[] products = 
         { new ClothingProduct(1000, "Women's black boots",79.99, new  FlatRateDiscount(.1))
          ,new ClothingProduct(1001, "Men's black boots", 64.99, new FlatRateDiscount(.1))
@@ -26,7 +28,7 @@ public class JavaDatabase implements Database{
     
     
     /**
-     * Constructor that creates the customer and product arrays.
+     * Constructor that creates the pre-populated customer and product arrays.
      */
     public JavaDatabase(){    
     

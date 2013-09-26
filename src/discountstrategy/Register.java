@@ -22,6 +22,13 @@ public class Register {
         receipt.addProductToReceipt(prodID, quantity);
     }
     
+    public final void changeReceiptType(Receipt receipt){
+        if(receipt == null){
+            throw new NullPointerException();
+        }
+        this.receipt = receipt;
+    }
+    
     public final void printReceipt(){
         receipt.printReceipt();
     }
