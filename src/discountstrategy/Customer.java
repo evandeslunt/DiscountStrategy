@@ -5,7 +5,7 @@
 package discountstrategy;
 
 /**
- * A Customer class that holds infomration such as name, customer ID, and address.
+ * A Customer class that holds information such as name, customer ID, and address.
  * 
  * @author Liz Ife Van Deslunt
  */
@@ -23,8 +23,8 @@ public class Customer {
     private int customerID;
     private String firstName;
     private String lastName;
-    private Address[] shippingAddresses = new Address[INIT_ARRAY_SIZE];
-    private Address[] billingAddresses = new Address[INIT_ARRAY_SIZE];
+    private AddressStrategy[] shippingAddresses = new AddressStrategy[INIT_ARRAY_SIZE];
+    private AddressStrategy[] billingAddresses = new AddressStrategy[INIT_ARRAY_SIZE];
     
     
     /**
@@ -39,8 +39,8 @@ public class Customer {
     /**
      * Constructor with a single ship-to and single bill-to address
      */
-    public Customer(int customerID, String fName, String lName, Address shipTo, 
-            Address billTo){
+    public Customer(int customerID, String fName, String lName, AddressStrategy shipTo, 
+            AddressStrategy billTo){
         setCustomerID(customerID);
         setFirstName(fName);
         setLastName(lName);
@@ -51,8 +51,8 @@ public class Customer {
      /**
      * Constructor with multiple ship-to and bill-to addresses
      */
-    public Customer(int customerID, String fName, String lName, Address[] shipTo, 
-            Address[] billTo){
+    public Customer(int customerID, String fName, String lName, AddressStrategy[] shipTo, 
+            AddressStrategy[] billTo){
         setCustomerID(customerID);
         setFirstName(fName);
         setLastName(lName);
@@ -82,11 +82,11 @@ public class Customer {
         return firstName + " " + lastName;
     }
     
-    public final Address[] getShippingAddresses(){
+    public final AddressStrategy[] getShippingAddresses(){
         return shippingAddresses;
     }
     
-    public final Address[] getBillingAddresses(){
+    public final AddressStrategy[] getBillingAddresses(){
         return billingAddresses;
     }
 
@@ -118,14 +118,14 @@ public class Customer {
        this.lastName = lastName;
     }
     
-    public final void addShippingAddress(Address address){
+    public final void addShippingAddress(AddressStrategy address){
         if(address == null){
             throw new NullPointerException(ADDR_ERR);
         }
         add(shippingAddresses, address);
     }
     
-    public final void addBillingAddress(Address address){
+    public final void addBillingAddress(AddressStrategy address){
         if(address == null){
             throw new NullPointerException(ADDR_ERR);
         }
@@ -140,7 +140,7 @@ public class Customer {
        * @param array 
        * @param o 
        */
-    private void add(Address[] array, Address o){
+    private void add(AddressStrategy[] array, AddressStrategy o){
         if(o == null){
             throw new NullPointerException();
         }
@@ -155,8 +155,8 @@ public class Customer {
      * Manual array resize. Adds one extra slot to the end of the array.
      * @param array The array to resize
      */
-    private Address[] expandArray(Address[] array){
-        Address[] tmp = new Address[array.length + 1];
+    private AddressStrategy[] expandArray(AddressStrategy[] array){
+        AddressStrategy[] tmp = new AddressStrategy[array.length + 1];
         
         for(int i = 0; i < array.length; i++){
             tmp[i] = array[i];

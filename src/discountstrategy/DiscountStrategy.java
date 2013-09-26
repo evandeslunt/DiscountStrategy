@@ -9,7 +9,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public interface Discount {
+public interface DiscountStrategy {
     
     public double getDiscountRate();
     public void setDiscountRate(double discountRate);

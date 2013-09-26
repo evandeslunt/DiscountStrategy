@@ -11,7 +11,7 @@ import java.text.NumberFormat;
  * address.
  * @author Liz Ife Van Deslunt
  */
-public class OnlineReceipt implements Receipt{
+public class OnlineReceipt implements ReceiptStrategy{
     // error messages
     private final static String CUST_NUM_ERR = "Please enter a valid customer ID.";
     private final static String SHIP_ADDR_ERR = "Please enter an ID for shipping address.";
@@ -29,7 +29,7 @@ public class OnlineReceipt implements Receipt{
     
     private Customer customer;
     private LineItem[] lineItems;
-    private Database db;
+    private DatabaseStrategy db;
     private int shipAddrID;
     private int billAddrID;
     
@@ -44,7 +44,7 @@ public class OnlineReceipt implements Receipt{
     
     //getters
     @Override
-    public final Database getDatabase(){
+    public final DatabaseStrategy getDatabase(){
         return db;
     }
     
@@ -64,7 +64,7 @@ public class OnlineReceipt implements Receipt{
      * @param db 
      */
     @Override
-    public final void setDatabase(Database db){
+    public final void setDatabase(DatabaseStrategy db){
         this.db = db;
     }
     

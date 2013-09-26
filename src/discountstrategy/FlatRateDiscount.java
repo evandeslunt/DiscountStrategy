@@ -10,7 +10,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public class FlatRateDiscount implements Discount{
+public class FlatRateDiscount implements DiscountStrategy{
     // error messages
     public final String RATE_ERR = "Please enter a value between 0 and 1.";
     

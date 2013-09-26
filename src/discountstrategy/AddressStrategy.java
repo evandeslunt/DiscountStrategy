@@ -10,7 +10,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public interface Address {
+public interface AddressStrategy {
     
     public void setToAttn(String toAttn);
     public void setLineOne(String lineOne);

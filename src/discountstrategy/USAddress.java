@@ -8,7 +8,7 @@ package discountstrategy;
  *
  * @author Liz Ife Van Deslunt
  */
-public class USAddress implements Address {
+public class USAddress implements AddressStrategy {
     private static final String ENTRY_ERR = "Please enter a value for "; //add the variable here
     private static final String ZIP_FORMAT_ERR = "Please enter a five-digit zip code."
             + "(Numbers only)";

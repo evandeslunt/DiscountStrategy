@@ -22,7 +22,7 @@ public interface Product {
     
     public double getDiscountRate();
     
-    public Discount getDiscountType();
-    public void setDiscountType(Discount discount);
+    public DiscountStrategy getDiscountType();
+    public void setDiscountType(DiscountStrategy discount);
     
 }

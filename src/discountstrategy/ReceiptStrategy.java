@@ -9,14 +9,14 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public interface Receipt {
+public interface ReceiptStrategy {
     
     public void printReceipt();
     public void setCustomer(int customerID);
     public void addProductToReceipt(int prodID, int qty);
     
-    public void setDatabase(Database db);
-    public Database getDatabase();
+    public void setDatabase(DatabaseStrategy db);
+    public DatabaseStrategy getDatabase();
     
     
 }

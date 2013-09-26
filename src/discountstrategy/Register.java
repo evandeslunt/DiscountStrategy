@@ -14,19 +14,35 @@ public class Register {
     private final static String RECEIPT_ERR = "Please enter a valid receipt type.";
     
     // global variables
-    private Receipt receipt;
-    
+    private ReceiptStrategy receipt;
+        
+    /**
+     * Constructor that initializes the receipt to PrintedReceipt
+     * @param prodID
+     * @param quantity 
+     */
     public Register(int customerID){
-        initializeReceipt(customerID);
+        receipt = new PrintedReceipt(customerID);
+    }
+    
+    /**
+     * Constructor that allows you to pass in a receipt (note: no customerID
+     * is required in this constructor because it is already supplied when the
+     * receipt is initialized.
+     * @param customerID
+     * @param receipt 
+     */
+    public Register(ReceiptStrategy receipt){
+        setReceiptType(receipt);
     }
 
     //public methods
-    
-    public final void addProductToReceipt(int prodID, int quantity){
+
+    public final void addProductToReceipt(int prodID, int quantity){        
         receipt.addProductToReceipt(prodID, quantity);
     }
     
-    public final void changeReceiptType(Receipt receipt){
+    public final void setReceiptType(ReceiptStrategy receipt){
         if(receipt == null){
             throw new NullPointerException(RECEIPT_ERR);
         }
@@ -37,11 +53,6 @@ public class Register {
         receipt.printReceipt();
     }
     
-    //private methods
-    
-    private void initializeReceipt(int customerID){
-        //validation is delegated to receipt.
-       receipt = new RegisterReceipt(customerID);
-    }
+   
     
 }

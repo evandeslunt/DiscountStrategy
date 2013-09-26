@@ -9,7 +9,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public class NoDiscount implements Discount{
+public class NoDiscount implements DiscountStrategy{
     private final String DISCOUNT_ERR = "Cannot set a discount rate on an "
             + "item with no discount.";
     private final double discountRate = 0; //no discount

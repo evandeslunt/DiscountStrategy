@@ -13,7 +13,7 @@ public class Startup {
     public static void main(String[] args){
        
        
-       Database db = new JavaDatabase();
+       DatabaseStrategy db = new JavaDatabase();
        Register reg = new Register(101);
        
        

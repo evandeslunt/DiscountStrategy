@@ -9,7 +9,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public class JavaDatabase implements Database{
+public class JavaDatabase implements DatabaseStrategy{
     // error messages
     private final static String CUST_ID_ERR = "Please enter a valid customer ID";
     private final static String PROD_ID_ERR = "Please enter a valid product ID";

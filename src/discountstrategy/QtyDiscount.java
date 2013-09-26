@@ -10,7 +10,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public class QtyDiscount implements Discount {
+public class QtyDiscount implements DiscountStrategy {
     // error messages
     public final static String RATE_ERR = "Please enter a value between 0 and 1.";
     public final static String NUM_ITEMS_ERR = "Please enter a number greater than 1.";

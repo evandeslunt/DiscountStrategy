@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author Liz Ife Van Deslunt
  */
-public class RegisterReceipt implements Receipt{
+public class PrintedReceipt implements ReceiptStrategy{
     private final String CUST_NUM_ERR = "Please enter a valid customer ID.";
     
     private final String headerRow = "ITEM #\t DESCR\t\t UNIT PRICE\t "
@@ -23,10 +23,10 @@ public class RegisterReceipt implements Receipt{
     
     private Customer customer;
     private LineItem[] lineItems;
-    private Database db;
+    private DatabaseStrategy db;
     
     
-    public RegisterReceipt(int customerID){
+    public PrintedReceipt(int customerID){
         setDatabase(new JavaDatabase()); // set the database here. we can change it later with the setDatabase method if we need to
         setCustomer(customerID);
         lineItems = new LineItem[INIT_LINE_ITEM_ARRAY_SIZE];
@@ -35,7 +35,7 @@ public class RegisterReceipt implements Receipt{
     
     //getters
     @Override
-    public final Database getDatabase(){
+    public final DatabaseStrategy getDatabase(){
         return db;
     }
     
@@ -46,7 +46,7 @@ public class RegisterReceipt implements Receipt{
     
     //setters
     @Override
-    public final void setDatabase(Database db){
+    public final void setDatabase(DatabaseStrategy db){
         this.db = db;
     }
     

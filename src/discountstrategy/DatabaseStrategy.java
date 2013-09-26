@@ -9,7 +9,7 @@ package discountstrategy;
  * 
  * @author Liz Ife Van Deslunt
  */
-public interface Database {
+public interface DatabaseStrategy {
     
     public void addCustomer(Customer c);
     public Customer findCustomer(int customerID);

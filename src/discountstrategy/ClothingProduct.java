@@ -22,9 +22,9 @@ public class ClothingProduct implements Product{
     private int prodID;
     private String description;
     private double price;
-    private Discount discount;
+    private DiscountStrategy discount;
     
-    public ClothingProduct(int prodID, String descr, double price, Discount discount){
+    public ClothingProduct(int prodID, String descr, double price, DiscountStrategy discount){
         setProductID(prodID);
         setDescription(descr);
         setPrice(price);
@@ -61,7 +61,7 @@ public class ClothingProduct implements Product{
 
    
     @Override
-    public final void setDiscountType(Discount d) {
+    public final void setDiscountType(DiscountStrategy d) {
         if(d == null){
             throw new NullPointerException(DISCOUNT_ERR);
         }
@@ -90,7 +90,7 @@ public class ClothingProduct implements Product{
     }
 
     @Override
-    public final Discount getDiscountType() {
+    public final DiscountStrategy getDiscountType() {
        return discount;
     }
 
