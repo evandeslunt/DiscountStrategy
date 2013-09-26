@@ -5,11 +5,15 @@
 package discountstrategy;
 
 /**
- *
+ * Cash register that handles input and output between the startup class and 
+ * the receipt.
  * @author Liz Ife Van Deslunt
  */
 public class Register {
+    // error messages
+    private final static String RECEIPT_ERR = "Please enter a valid receipt type.";
     
+    // global variables
     private Receipt receipt;
     
     public Register(int customerID){
@@ -24,7 +28,7 @@ public class Register {
     
     public final void changeReceiptType(Receipt receipt){
         if(receipt == null){
-            throw new NullPointerException();
+            throw new NullPointerException(RECEIPT_ERR);
         }
         this.receipt = receipt;
     }
@@ -36,8 +40,8 @@ public class Register {
     //private methods
     
     private void initializeReceipt(int customerID){
-        //validation has already occurred when we set customerID
-        receipt = new RegisterReceipt(customerID);
+        //validation is delegated to receipt.
+       receipt = new RegisterReceipt(customerID);
     }
     
 }

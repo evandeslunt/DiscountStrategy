@@ -5,7 +5,7 @@
 package discountstrategy;
 
 /**
- * This class represents a 0% discount (i.e., full price)
+ * This class represents a 0% discount (i.e., no discount applied).
  * 
  * @author Liz Ife Van Deslunt
  */

@@ -5,17 +5,21 @@
 package discountstrategy;
 
 /**
- *
+ * A Customer class that holds infomration such as name, customer ID, and address.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public class Customer {
-    
+    // error messages
     private final String ID_ERR = "Please enter an ID greater than 0.";
     private final String FIRST_NAME_ERR = "Please enter a first name.";
     private final String LAST_NAME_ERR = "Please enter a last name.";
+    private final String ADDR_ERR = "Please enter a valid address.";
     
+    // constants
     private final int INIT_ARRAY_SIZE = 1;
     
+    // global variables
     private int customerID;
     private String firstName;
     private String lastName;
@@ -116,14 +120,14 @@ public class Customer {
     
     public final void addShippingAddress(Address address){
         if(address == null){
-            throw new NullPointerException();
+            throw new NullPointerException(ADDR_ERR);
         }
         add(shippingAddresses, address);
     }
     
     public final void addBillingAddress(Address address){
         if(address == null){
-            throw new NullPointerException();
+            throw new NullPointerException(ADDR_ERR);
         }
         add(billingAddresses, address);
     }
@@ -136,7 +140,7 @@ public class Customer {
        * @param array 
        * @param o 
        */
-    private void add(Object[] array, Object o){
+    private void add(Address[] array, Address o){
         if(o == null){
             throw new NullPointerException();
         }
@@ -151,8 +155,8 @@ public class Customer {
      * Manual array resize. Adds one extra slot to the end of the array.
      * @param array The array to resize
      */
-    private Object[] expandArray(Object[] array){
-        Object[] tmp = new Object[array.length + 1];
+    private Address[] expandArray(Address[] array){
+        Address[] tmp = new Address[array.length + 1];
         
         for(int i = 0; i < array.length; i++){
             tmp[i] = array[i];

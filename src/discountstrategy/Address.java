@@ -5,12 +5,12 @@
 package discountstrategy;
 
 /**
- *
+ * A basic template for an address. It does not include country-specific fields,
+ * such as state, province, or zip.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public interface Address {
-    
-    //does not have state or zip fields required because these vary by country
     
     public void setToAttn(String toAttn);
     public void setLineOne(String lineOne);
@@ -23,7 +23,10 @@ public interface Address {
     public String getCity();
     public String getCountry();
     
-    @Override
-    public String toString();
+    /**
+     * Returns the address in a readable format for printing.
+     * @return 
+     */
+    public String getFormattedAddress();
     
 }

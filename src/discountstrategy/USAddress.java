@@ -140,7 +140,7 @@ public class USAddress implements Address {
     }
     
     @Override
-    public final String toString(){
+    public final String getFormattedAddress(){
         if(lineTwo.equals("")){
             return toAttn + "\n"
                 + lineOne + "\n"

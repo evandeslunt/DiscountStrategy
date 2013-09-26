@@ -5,7 +5,8 @@
 package discountstrategy;
 
 /**
- *
+ * Interface for a generic receipt.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public interface Receipt {

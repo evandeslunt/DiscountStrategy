@@ -5,7 +5,8 @@
 package discountstrategy;
 
 /**
- *
+ * This interface defines the basic information common to any product.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public interface Product {
@@ -16,8 +17,8 @@ public interface Product {
     public double getPrice();
     public void setPrice(double price);
     
-    public int getItemNumber();
-    public void setItemNumber(int itemNumber);
+    public int getProductID();
+    public void setProductID(int prodID);
     
     public double getDiscountRate();
     

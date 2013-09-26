@@ -5,7 +5,8 @@
 package discountstrategy;
 
 /**
- *
+ * Interface for a basic database that stores products and customers.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public interface Database {

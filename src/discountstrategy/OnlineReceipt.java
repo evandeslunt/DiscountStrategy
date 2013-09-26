@@ -7,18 +7,23 @@ package discountstrategy;
 import java.text.NumberFormat;
 
 /**
- *
+ * Formats the receipt for an online order, which includes a shipping/billing 
+ * address.
  * @author Liz Ife Van Deslunt
  */
 public class OnlineReceipt implements Receipt{
-    private final String CUST_NUM_ERR = "Please enter a valid customer ID.";
-    private final String MISSING_ADDRESS = "Please enter an ID for shipping and billing addresses";
+    // error messages
+    private final static String CUST_NUM_ERR = "Please enter a valid customer ID.";
+    private final static String SHIP_ADDR_ERR = "Please enter an ID for shipping address.";
+    private final static String BILL_ADDR_ERR = "Please enter an ID for the billing address.";
     
-    private final String headerRow = "ITEM #\t DESCR\t\t UNIT PRICE\t "
+    // constants
+    private final String HEADER_ROW = "ITEM #\t DESCR\t\t UNIT PRICE\t "
             + "QTY\t EXT.PRICE\t DISCOUNT\t TOTAL";
-    private final String tabsForTotals = "\nGRAND TOTALS: \t\t\t\t\t" ;
+    private final String TABS_FOR_TOTALS = "\nGRAND TOTALS: \t\t\t\t\t" ;
     private final int INIT_LINE_ITEM_ARRAY_SIZE = 1;
     
+    // global variables
     private NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
     private NumberFormat percentFormatter = NumberFormat.getPercentInstance();
     
@@ -47,45 +52,79 @@ public class OnlineReceipt implements Receipt{
         return lineItems;
     }
     
+    public final Customer getCustomer(){
+        return customer;
+    }
+    
     
     //setters
+    
+    /**
+     * Changes the database used by this receipt.
+     * @param db 
+     */
     @Override
     public final void setDatabase(Database db){
         this.db = db;
     }
     
+    /**
+     * Sets the customer completing the transaction.
+     * 
+     * @param customerID a
+     */
     @Override
     public final void setCustomer(int customerID){
-        if(customerID < 0){
-            throw new IllegalArgumentException(CUST_NUM_ERR);
-        }
+        //validation is delegated to database.
         customer = db.findCustomer(customerID);
     }
     
-    public final void setShipAddrID(int addrNum){
-        if(addrNum < 0){
-            throw new IllegalArgumentException(MISSING_ADDRESS);
+    /**
+     * Changes the shipping address ID used by this receipt.
+     * 
+     * @param addrNum 
+     */
+    public final void setShipAddrID(int addrID){
+        if(addrID < 0){
+            throw new IllegalArgumentException(SHIP_ADDR_ERR);
         }
-        this.shipAddrID = addrNum;
+        this.shipAddrID = addrID;
     }
     
-    public final void setBillAddrID(int addrNum){
-        if(addrNum < 0){
-            throw new IllegalArgumentException(MISSING_ADDRESS);
+    /**
+     * Changes the billing address ID used by this receipt.
+     * 
+     * @param addrID 
+     */
+    public final void setBillAddrID(int addrID){
+        if(addrID < 0){
+            throw new IllegalArgumentException(BILL_ADDR_ERR);
         }
-        this.billAddrID = addrNum;
+        this.billAddrID = addrID;
     }
     
+    /**
+     * Adds a product to the receipt's line item list.
+     * 
+     * @param productID
+     * @param qty The number of the product purchased.
+     */
     @Override
     public final void addProductToReceipt(int productID, int qty){
+        //product ID validation is delegated to database.
+        Product product = db.findProduct(productID);
+        
         //resize array if it's full
         if(lineItems[lineItems.length - 1 ] != null){
             lineItems = resizeLineItemArray();
         }
         //add to array
-        addProductToLineItems(productID, qty);
+        addProductToLineItems(product, qty);
     }
     
+    /**
+     * Prints the receipt to the console.
+     */
      @Override
     public final void printReceipt(){
         String printOut = buildPrintOut();
@@ -111,8 +150,8 @@ public class OnlineReceipt implements Receipt{
       * @param prodID
       * @param qty 
       */
-     private void addProductToLineItems(int prodID, int qty){
-         lineItems[lineItems.length - 1 ] = new LineItem(db.findProduct(prodID), qty);
+     private void addProductToLineItems(Product product, int qty){
+         lineItems[lineItems.length - 1 ] = new LineItem(product, qty);
      }
      
      /**
@@ -122,7 +161,7 @@ public class OnlineReceipt implements Receipt{
     private String buildPrintOut(){
         String printOut = addCustomerInfo();
       
-        printOut = printOut + "\n" + headerRow;
+        printOut = printOut + "\n" + HEADER_ROW;
         printOut = printOut + addLineItemsToPrintOut();
         printOut = printOut + addGrandTotals();
         return printOut;
@@ -141,7 +180,7 @@ public class OnlineReceipt implements Receipt{
                     curr.getProdDescription() + "\t" +
                     moneyFormatter.format(curr.getUnitPrice()) + "\t" +
                     curr.getQuantity() + "\t" +
-                    moneyFormatter.format(curr.getUndiscountedPrice()) + "\t\t" +
+                    moneyFormatter.format(curr.getExtendedPrice()) + "\t\t" +
                     percentFormatter.format(curr.getDiscountRate()) + "\t\t" +
                     moneyFormatter.format(curr.getFinalPrice()) + "\n";
             
@@ -159,12 +198,12 @@ public class OnlineReceipt implements Receipt{
         double finalTotal = 0;
         for(int i = 0; i < lineItems.length; i++){
             LineItem curr = lineItems[i];
-            undiscountedTotal += curr.getUndiscountedPrice();
+            undiscountedTotal += curr.getExtendedPrice();
             finalTotal += curr.getFinalPrice();
         }
         
         double amountSaved = undiscountedTotal - finalTotal;
-        String totals =  tabsForTotals + moneyFormatter.format(undiscountedTotal) 
+        String totals =  TABS_FOR_TOTALS + moneyFormatter.format(undiscountedTotal) 
                 + "\t\t" + moneyFormatter.format(amountSaved) + "\t\t"
                 + moneyFormatter.format(finalTotal);
         
@@ -178,9 +217,9 @@ public class OnlineReceipt implements Receipt{
     private String addCustomerInfo(){
          String printOut = "Customer: " + customer.getFullName();
          printOut = printOut + "\nShipping Address:\n" 
-                 + customer.getShippingAddresses()[shipAddrID].toString();
+                 + customer.getShippingAddresses()[shipAddrID].getFormattedAddress();
          printOut = printOut + "\nBilling Address:\n" 
-                 + customer.getBillingAddresses()[billAddrID].toString();
+                 + customer.getBillingAddresses()[billAddrID].getFormattedAddress();
          return printOut;
     }
     

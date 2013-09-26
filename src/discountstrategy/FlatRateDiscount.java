@@ -5,14 +5,18 @@
 package discountstrategy;
 
 /**
- *
+ * A flat-rate discount applies the same discount rate to any product purchase,
+ * regardless of quantity.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public class FlatRateDiscount implements Discount{
-       
+    // error messages
     public final String RATE_ERR = "Please enter a value between 0 and 1.";
     
+    // global variables
     private double discountRate;
+    
     
     public FlatRateDiscount(double discountRate){
         setDiscountRate(discountRate);
@@ -34,6 +38,10 @@ public class FlatRateDiscount implements Discount{
     
     // getters
     
+    /**
+     * Returns the discount rate as a percentage (a number between 0 and 1).
+     * @return 
+     */
     @Override
     public final double getDiscountRate(){
         return discountRate;

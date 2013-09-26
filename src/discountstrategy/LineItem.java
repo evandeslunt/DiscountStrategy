@@ -10,7 +10,11 @@ package discountstrategy;
  * @author Liz Ife Van Deslunt
  */
 public class LineItem {
+    // error messages
+    private final static String QTY_ERR = "Please enter a quantity greater than 0.";
+    private final static String PROD_ERR = "Please enter a valid product.";
     
+    // global variables
     private Product product;
     private int quantity;
     
@@ -22,7 +26,7 @@ public class LineItem {
     
     //getters
     public final int getProductNumber(){
-        return product.getItemNumber();
+        return product.getProductID();
     }
     
     public final String getProdDescription(){
@@ -34,10 +38,10 @@ public class LineItem {
     }
     
     /**
-     * Returns the undiscounted price of the item(s).
+     * Returns the undiscounted price of the item(s). (qty * price)
      * @return 
      */
-    public final double getUndiscountedPrice(){
+    public final double getExtendedPrice(){
         return quantity * product.getPrice();
     }
     
@@ -54,7 +58,7 @@ public class LineItem {
      * @return 
      */
     public final double getFinalPrice(){
-        return getUndiscountedPrice() * (1 - getDiscountRate());
+        return getExtendedPrice() * (1 - getDiscountRate());
     }
     
     public final int getQuantity(){
@@ -65,14 +69,14 @@ public class LineItem {
     //setters
     public final void setProduct(Product p){
         if(p == null){
-            throw new IllegalArgumentException();
+            throw new NullPointerException(PROD_ERR);
         }
         product = p;
     }
     
     public final void setQuantity(int quantity){
         if(quantity <= 0){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(QTY_ERR);
         }
         this.quantity = quantity;
     }

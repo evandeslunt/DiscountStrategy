@@ -5,18 +5,27 @@
 package discountstrategy;
 
 /**
- *
+ * A class for clothing products.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public class ClothingProduct implements Product{
+    // error messages 
+    private final static String PROD_ERR = "Please enter a valid product number.";
+    private final static String DESCR_ERR = "Please enter a description for this product.";
+    private final static String PRICE_ERR = "Please enter a price greater than $0.00.";
+    private final static String DISCOUNT_ERR = "Please supply a discount for this product.";
     
+    // constants
+    
+    // global variables
     private int prodID;
     private String description;
     private double price;
     private Discount discount;
     
     public ClothingProduct(int prodID, String descr, double price, Discount discount){
-        setItemNumber(prodID);
+        setProductID(prodID);
         setDescription(descr);
         setPrice(price);
         setDiscountType(discount);
@@ -29,7 +38,7 @@ public class ClothingProduct implements Product{
         if(description == null){
             throw new NullPointerException();
         } else if (description.length() == 0){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(DESCR_ERR);
         }
         this.description = description;
     }
@@ -37,31 +46,31 @@ public class ClothingProduct implements Product{
     @Override
     public final void setPrice(double price) {
         if(price <= 0){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(PRICE_ERR);
         }
         this.price = price;
     }
 
     @Override
-    public final void setItemNumber(int itemNumber) {
-        if(itemNumber <= 0){
-            throw new IllegalArgumentException();
+    public final void setProductID(int prodID) {
+        if(prodID < 0){
+            throw new IllegalArgumentException(PROD_ERR);
         }
-        prodID = itemNumber;
+        this.prodID = prodID;
     }
 
    
     @Override
     public final void setDiscountType(Discount d) {
         if(d == null){
-            throw new NullPointerException();
+            throw new NullPointerException(DISCOUNT_ERR);
         }
         discount = d;
     }
     
     //getters
     @Override
-    public final int getItemNumber() {
+    public final int getProductID() {
        return prodID;
     }
     
@@ -70,12 +79,12 @@ public class ClothingProduct implements Product{
         return description;
     }
      
-         @Override
+    @Override
     public final double getPrice() {
         return price;
     }
     
-     @Override
+    @Override
     public final double getDiscountRate() {
         return discount.getDiscountRate();
     }

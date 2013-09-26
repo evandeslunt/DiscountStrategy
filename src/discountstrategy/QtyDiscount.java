@@ -11,19 +11,26 @@ package discountstrategy;
  * @author Liz Ife Van Deslunt
  */
 public class QtyDiscount implements Discount {
-
-    public final String RATE_ERR = "Please enter a value between 0 and 1.";
-    public final String NUM_ITEMS_ERR = "Please enter a number greater than 1.";
-    public final double NO_DISCOUNT = 0.00;
+    // error messages
+    public final static String RATE_ERR = "Please enter a value between 0 and 1.";
+    public final static String NUM_ITEMS_ERR = "Please enter a number greater than 1.";
+    public final static String MISSING_QTY_ERR = "Please enter the quantity purchased.";
     
+    // constants
+    public final static double NO_DISCOUNT = 0.00;
+    public final static int NOT_INITIALIZED = -1;
+    
+    // global variables
     private double discountRate;
     private int minNumItems;
     private int actualNumItems;
     
-    /**
-     * Creates a new QtyDiscount.
-     * @param discountRate The discount rate, a value between 0 and 1.
-     */
+    public QtyDiscount(double discountRate, int minNumItems){
+        setDiscountRate(discountRate);
+        setMinNumItems(minNumItems);
+        actualNumItems = NOT_INITIALIZED;
+    }
+    
     public QtyDiscount(double discountRate, int minNumItems, int actualNumItems){
         setDiscountRate(discountRate);
         setMinNumItems(minNumItems);
@@ -32,9 +39,8 @@ public class QtyDiscount implements Discount {
     
     // setters
     
-    
     /**
-     * Sets the discount rate to a percentage.
+     * Sets the discount rate to a percentage (value between 0 and 1).
      * @param discount The discount percentage, a number between 0 and 1.
      */
     @Override
@@ -57,6 +63,10 @@ public class QtyDiscount implements Discount {
         this.minNumItems = num;
     }
     
+    /**
+     * Sets the actual number of items purchased.
+     * @param num 
+     */
     public final void setActualNumItems(int num){
          if(num <= 0){
             throw new IllegalArgumentException();
@@ -66,15 +76,25 @@ public class QtyDiscount implements Discount {
     
     // getters
     
+    /**
+     * Returns the discount rate, if the actual number of items purchased is 
+     * greater than the minimum quantity required. Otherwise, returns 0 as the 
+     * discount rate.
+     * If no value has been supplied for the discount, it throws an exception
+     * asking for the quantity purchased (ideally, throws it to user interface,
+     * which would let you enter the quantity purchased and continue).
+     * @return 
+     */
     @Override
     public final double getDiscountRate(){
-        if(actualNumItems < minNumItems){
+        if(minNumItems == NOT_INITIALIZED){
+            throw new IllegalArgumentException(MISSING_QTY_ERR);
+        } else if(actualNumItems < minNumItems){
             return NO_DISCOUNT;
         } else{
             return discountRate;
         }
     }
-    
     
     public final int getMinNumItems(){
         return minNumItems;

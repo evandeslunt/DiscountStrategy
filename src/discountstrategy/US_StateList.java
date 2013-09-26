@@ -5,7 +5,7 @@
 package discountstrategy;
 
 /**
- *
+ * A list of US State abbreviations for validating US Addresses.
  * @author Liz Ife Van Deslunt
  */
 public class US_StateList {

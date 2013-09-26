@@ -4,6 +4,7 @@
  */
 package discountstrategy;
 import java.text.*;
+import java.util.*;
 
 /**
  *
@@ -29,6 +30,7 @@ public class RegisterReceipt implements Receipt{
         setDatabase(new JavaDatabase()); // set the database here. we can change it later with the setDatabase method if we need to
         setCustomer(customerID);
         lineItems = new LineItem[INIT_LINE_ITEM_ARRAY_SIZE];
+        
     }
     
     //getters
@@ -50,21 +52,22 @@ public class RegisterReceipt implements Receipt{
     
     @Override
     public final void setCustomer(int customerID){
-        if(customerID < 0){
-            throw new IllegalArgumentException(CUST_NUM_ERR);
-        }
+        //validation is delegated to database.
         customer = db.findCustomer(customerID);
     }
     
     
     @Override
     public final void addProductToReceipt(int productID, int qty){
+        //product validation is delegated to database.
+        Product product = db.findProduct(productID);
+        
         //resize array if it's full
         if(lineItems[lineItems.length - 1 ] != null){
             lineItems = resizeLineItemArray();
         }
         //add to array
-        addProductToLineItems(productID, qty);
+        addProductToLineItems(product, qty);
     }
     
      @Override
@@ -88,8 +91,8 @@ public class RegisterReceipt implements Receipt{
       * @param prodID
       * @param qty 
       */
-     private void addProductToLineItems(int prodID, int qty){
-         lineItems[lineItems.length - 1 ] = new LineItem(db.findProduct(prodID), qty);
+     private void addProductToLineItems(Product product, int qty){
+         lineItems[lineItems.length - 1 ] = new LineItem(product, qty);
      }
      
      /**
@@ -119,7 +122,7 @@ public class RegisterReceipt implements Receipt{
                     curr.getProdDescription() + "\t" +
                     moneyFormatter.format(curr.getUnitPrice()) + "\t" +
                     curr.getQuantity() + "\t" +
-                    moneyFormatter.format(curr.getUndiscountedPrice()) + "\t\t" +
+                    moneyFormatter.format(curr.getExtendedPrice()) + "\t\t" +
                     percentFormatter.format(curr.getDiscountRate()) + "\t\t" +
                     moneyFormatter.format(curr.getFinalPrice()) + "\n";
             
@@ -137,7 +140,7 @@ public class RegisterReceipt implements Receipt{
         double finalTotal = 0;
         for(int i = 0; i < lineItems.length; i++){
             LineItem curr = lineItems[i];
-            undiscountedTotal += curr.getUndiscountedPrice();
+            undiscountedTotal += curr.getExtendedPrice();
             finalTotal += curr.getFinalPrice();
         }
         

@@ -5,7 +5,8 @@
 package discountstrategy;
 
 /**
- *
+ * An interface for a discount.
+ * 
  * @author Liz Ife Van Deslunt
  */
 public interface Discount {
