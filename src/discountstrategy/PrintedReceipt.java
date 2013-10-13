@@ -17,9 +17,11 @@ public class PrintedReceipt implements ReceiptStrategy{
             + "QTY\t EXT.PRICE\t DISCOUNT\t TOTAL";
     private final String tabsForTotals = "\nGRAND TOTALS: \t\t\t\t\t" ;
     private final int INIT_LINE_ITEM_ARRAY_SIZE = 1;
+    private final String DATE_FORMAT = "MM/dd/yyyy hh:mm aa";
     
     private NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
     private NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+    private Calendar transDate;
     
     private Customer customer;
     private LineItem[] lineItems;
@@ -30,6 +32,7 @@ public class PrintedReceipt implements ReceiptStrategy{
         setDatabase(new JavaDatabase()); // set the database here. we can change it later with the setDatabase method if we need to
         setCustomer(customerID);
         lineItems = new LineItem[INIT_LINE_ITEM_ARRAY_SIZE];
+        transDate = Calendar.getInstance(); //set the transaction date to now.
         
     }
     
@@ -101,7 +104,7 @@ public class PrintedReceipt implements ReceiptStrategy{
       */
     private String buildPrintOut(){
          String printOut = "Customer: " + customer.getFirstName() + " " 
-                + customer.getLastName();
+                + customer.getLastName() + "\nDate: " + getTransDateAsString();
       
         printOut = printOut + "\n" + headerRow;
         printOut = printOut + addLineItemsToPrintOut();
@@ -150,6 +153,15 @@ public class PrintedReceipt implements ReceiptStrategy{
                 + moneyFormatter.format(finalTotal);
         
         return totals;
+    }
+    
+    /**
+     * Returns the transaction date as a formatted string.
+     * @return 
+     */
+    private String getTransDateAsString(){
+        String formattedDate = DateUtilities.formatDate(transDate, DATE_FORMAT);
+        return formattedDate;
     }
     
    

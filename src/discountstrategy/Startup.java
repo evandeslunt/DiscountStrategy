@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package discountstrategy;
 
 
@@ -13,7 +10,6 @@ public class Startup {
     public static void main(String[] args){
        
        
-       DatabaseStrategy db = new JavaDatabase();
        Register reg = new Register(101);
        
        

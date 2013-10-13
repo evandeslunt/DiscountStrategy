@@ -5,6 +5,7 @@
 package discountstrategy;
 
 import java.text.NumberFormat;
+import java.util.*;
 
 /**
  * Formats the receipt for an online order, which includes a shipping/billing 
@@ -22,10 +23,12 @@ public class OnlineReceipt implements ReceiptStrategy{
             + "QTY\t EXT.PRICE\t DISCOUNT\t TOTAL";
     private final String TABS_FOR_TOTALS = "\nGRAND TOTALS: \t\t\t\t\t" ;
     private final int INIT_LINE_ITEM_ARRAY_SIZE = 1;
+    private final String DATE_FORMAT = "MM/dd/yyyy hh:mm aa";
     
     // global variables
     private NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
     private NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+    private Calendar transDate;
     
     private Customer customer;
     private LineItem[] lineItems;
@@ -39,6 +42,7 @@ public class OnlineReceipt implements ReceiptStrategy{
         setShipAddrID(shipAddrID);
         setBillAddrID(billAddrID);
         lineItems = new LineItem[INIT_LINE_ITEM_ARRAY_SIZE];
+        transDate = Calendar.getInstance(); //sets the transaction date to now.
         
     }
     
@@ -159,7 +163,8 @@ public class OnlineReceipt implements ReceiptStrategy{
       * @return 
       */
     private String buildPrintOut(){
-        String printOut = addCustomerInfo();
+        String printOut = addCustomerInfo() 
+               + "\nOrder Date: " + getTransDateAsString();;
       
         printOut = printOut + "\n" + HEADER_ROW;
         printOut = printOut + addLineItemsToPrintOut();
@@ -221,6 +226,15 @@ public class OnlineReceipt implements ReceiptStrategy{
          printOut = printOut + "\nBilling Address:\n" 
                  + customer.getBillingAddresses()[billAddrID].getFormattedAddress();
          return printOut;
+    }
+    
+    /**
+     * Returns the transaction date as a formatted string.
+     * @return 
+     */
+    private String getTransDateAsString(){
+        String formattedDate = DateUtilities.formatDate(transDate, DATE_FORMAT);
+        return formattedDate;
     }
     
 }
