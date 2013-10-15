@@ -9,6 +9,7 @@ package discountstrategy;
 public class DiscountFactory {
     
     public enum DISCOUNT_TYPE {FLAT_RATE, QUANTITY, NONE};
+   
      
     /**
      * Returns a DiscountStrategy object.
@@ -31,5 +32,6 @@ public class DiscountFactory {
                 return null;
         }
     }
+    
     
 }

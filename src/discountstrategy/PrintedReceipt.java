@@ -36,12 +36,7 @@ public class PrintedReceipt implements ReceiptStrategy{
         
     }
     
-    //getters
-    @Override
-    public final DatabaseStrategy getDatabase(){
-        return db;
-    }
-    
+    //getters  
     public final LineItem[] getLineItemArray(){
         return lineItems;
     }

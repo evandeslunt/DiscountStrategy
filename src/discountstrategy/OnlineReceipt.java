@@ -47,10 +47,6 @@ public class OnlineReceipt implements ReceiptStrategy{
     }
     
     //getters
-    @Override
-    public final DatabaseStrategy getDatabase(){
-        return db;
-    }
     
     public final LineItem[] getLineItemArray(){
         return lineItems;

@@ -13,28 +13,28 @@ package discountstrategy;
 public class QtyDiscount implements DiscountStrategy {
     // error messages
     public final static String RATE_ERR = "Please enter a value between 0 and 1.";
-    public final static String NUM_ITEMS_ERR = "Please enter a number greater than 1.";
+    public final static String QTY_ERR = "Please enter a number greater than 1.";
     public final static String MISSING_QTY_ERR = "Please enter the quantity purchased.";
     
     // constants
     public final static double NO_DISCOUNT = 0.00;
-    public final static int NOT_INITIALIZED = -1;
+    public final static double NOT_INITIALIZED = -1;
     
     // global variables
     private double discountRate;
-    private int minNumItems;
-    private int actualNumItems;
+    private double minQuantity;
+    private double actualQuantity;
     
     public QtyDiscount(double discountRate, int minNumItems){
         setDiscountRate(discountRate);
-        setMinNumItems(minNumItems);
-        actualNumItems = NOT_INITIALIZED;
+        setMinQuantity(minNumItems);
+        actualQuantity = NOT_INITIALIZED;
     }
     
     public QtyDiscount(double discountRate, int minNumItems, int actualNumItems){
         setDiscountRate(discountRate);
-        setMinNumItems(minNumItems);
-        setActualNumItems(actualNumItems);
+        setMinQuantity(minNumItems);
+        setActualQuantity(actualNumItems);
     }
     
     // setters
@@ -52,26 +52,27 @@ public class QtyDiscount implements DiscountStrategy {
     }
     
     /**
-     * Sets the minimum number of items required to receive the quantity discount.
-     * @param num The number of items that must be purchased to receive the 
+     * Sets the minimum quantity required to receive the quantity discount.
+     * @param quantity - The quantity that must be purchased to receive the 
      * discounted rate.
      */
-    public final void setMinNumItems(int num){
-        if(num < 2){
-            throw new IllegalArgumentException(NUM_ITEMS_ERR);
+    @Override
+    public final void setMinQuantity(double quantity){
+        if(quantity < 2){
+            throw new IllegalArgumentException(QTY_ERR);
         }
-        this.minNumItems = num;
+        this.minQuantity = quantity;
     }
     
     /**
-     * Sets the actual number of items purchased.
-     * @param num 
+     * Sets the actual quantity purchased.
+     * @param quantity - The quantity of items purchased.
      */
-    public final void setActualNumItems(int num){
-         if(num <= 0){
-            throw new IllegalArgumentException();
+    public final void setActualQuantity(int quantity){
+         if(quantity <= 0){
+            throw new IllegalArgumentException(QTY_ERR);
         }
-        this.actualNumItems = num;
+        this.actualQuantity = quantity;
     }
     
     // getters
@@ -87,16 +88,17 @@ public class QtyDiscount implements DiscountStrategy {
      */
     @Override
     public final double getDiscountRate(){
-        if(minNumItems == NOT_INITIALIZED){
+        if(actualQuantity == NOT_INITIALIZED){
             throw new IllegalArgumentException(MISSING_QTY_ERR);
-        } else if(actualNumItems < minNumItems){
+        } else if(actualQuantity < minQuantity){
             return NO_DISCOUNT;
         } else{
             return discountRate;
         }
     }
     
-    public final int getMinNumItems(){
-        return minNumItems;
+    @Override
+    public final double getMinQuantity(){
+        return minQuantity;
     }
 }

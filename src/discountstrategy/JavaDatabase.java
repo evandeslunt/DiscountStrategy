@@ -20,31 +20,51 @@ public class JavaDatabase implements DatabaseStrategy{
     private final static String CUST_NOT_FOUND = "That customer was not found.";
     private final static String PROD_NOT_FOUND = "That product was not found.";
     
+    private Product[] products;
     
     // hard-coded data
      private USAddress garyShipAddress = new USAddress("Gary Zivney", "123 Easy Street", 
              "Waukesha", "WI", "53188");
      private USAddress garyBillAddress = new USAddress("Gary Zivney", "456 University Ave",
              "Madison", "WI", "53703");
-    private Product[] products = 
-        { new ClothingProduct(1000, "Women's black boots",79.99, new  FlatRateDiscount(.1))
-         ,new ClothingProduct(1001, "Men's black boots", 64.99, new FlatRateDiscount(.1))
-         ,new ClothingProduct(1002, "Women's brown boots",79.99, new FlatRateDiscount(.15))
-         ,new ClothingProduct(1003, "Women's dress shoes", 59.99, new NoDiscount())
-         ,new ClothingProduct(1004, "Men's dress shoes", 39.99, new NoDiscount())};
+//    private Product[] products =
+//        { new ClothingProduct(1000, "Women's black boots",79.99, new  FlatRateDiscount(.1))
+//         ,new ClothingProduct(1001, "Men's black boots", 64.99, new FlatRateDiscount(.1))
+//         ,new ClothingProduct(1002, "Women's brown boots",79.99, new FlatRateDiscount(.15))
+//         ,new ClothingProduct(1003, "Women's dress shoes", 59.99, new NoDiscount())
+//         ,new ClothingProduct(1004, "Men's dress shoes", 39.99, new NoDiscount())};
     private Customer[] customers = {  new Customer(100, "Gary", "Zivney", garyShipAddress, garyBillAddress)
                                     , new Customer(101, "Becca", "Emrick")
-                                    , new Customer(102, "Ife", "Van Deslunt")};
+                                    , new Customer(102, "Liz", "Van Deslunt")};
     
     
     /**
      * Constructor that creates the pre-populated customer and product arrays.
      */
     public JavaDatabase(){    
-    
+        initializeProductsArray();
     }
     
-    
+    private void initializeProductsArray(){
+        DiscountFactory discFact = new DiscountFactory();
+        DiscountStrategy noDisc = discFact.getDiscount(DiscountFactory.DISCOUNT_TYPE.NONE, 0, 0);
+        DiscountStrategy flatRate = discFact.getDiscount(DiscountFactory.DISCOUNT_TYPE.FLAT_RATE, .1, 1);
+        
+        ProductFactory fact = new ProductFactory();
+        Product blackBootsWomen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Women's black boots", 79.99, flatRate);
+        Product blackBootsMen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Men's black boots", 64.99, flatRate);
+        Product brownBootsWomen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Women's brown boots", 59.99, flatRate);
+        Product dressShoesWomen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Women's dress shoes", 59.99, noDisc);
+        Product dressShoesMen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Men's dress shoes", 59.99, noDisc);
+        
+        products = new Product[10];
+        addProduct(blackBootsWomen);
+        addProduct(blackBootsMen);
+        addProduct(brownBootsWomen);
+        addProduct(dressShoesWomen);
+        addProduct(dressShoesMen);
+        
+    }
     /**
      * Returns the customer with the given customerID, or throws exception if
      * the customer was not found.
