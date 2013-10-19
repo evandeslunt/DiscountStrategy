@@ -21,7 +21,7 @@ public interface DiscountStrategy {
      * @param discountRate - The discount rate (e.g., 50% off) as a decimal
      * between 0 and 1.
      */
-    public void setDiscountRate(double discountRate);
+    public void setDiscountRate(double discountRate) throws IllegalArgumentException;
     
     /**
      * Returns the minimum quantity required to receive the discount.
@@ -32,5 +32,5 @@ public interface DiscountStrategy {
      * Sets the minimum quantity required to receive the discount.
      * @param quantity - The minimum quantity required to receive the discount.
      */
-    public void setMinQuantity(double quantity);
+    public void setMinQuantity(double quantity) throws IllegalArgumentException;
 }

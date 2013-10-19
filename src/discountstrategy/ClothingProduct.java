@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package discountstrategy;
 
 /**
@@ -34,7 +31,7 @@ public class ClothingProduct implements Product{
     //setters
 
     @Override
-    public final void setDescription(String description) {
+    public final void setDescription(String description) throws IllegalArgumentException, NullPointerException{
         if(description == null){
             throw new NullPointerException();
         } else if (description.length() == 0){
@@ -44,7 +41,7 @@ public class ClothingProduct implements Product{
     }
 
     @Override
-    public final void setPrice(double price) {
+    public final void setPrice(double price) throws IllegalArgumentException{
         if(price <= 0){
             throw new IllegalArgumentException(PRICE_ERR);
         }
@@ -52,7 +49,7 @@ public class ClothingProduct implements Product{
     }
 
     @Override
-    public final void setProductID(int prodID) {
+    public final void setProductID(int prodID) throws IllegalArgumentException {
         if(prodID < 0){
             throw new IllegalArgumentException(PROD_ERR);
         }
@@ -61,7 +58,7 @@ public class ClothingProduct implements Product{
 
    
     @Override
-    public final void setDiscountType(DiscountStrategy d) {
+    public final void setDiscountType(DiscountStrategy d) throws NullPointerException{
         if(d == null){
             throw new NullPointerException(DISCOUNT_ERR);
         }

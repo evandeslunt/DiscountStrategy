@@ -11,11 +11,11 @@ package discountstrategy;
  */
 public interface DatabaseStrategy {
     
-    public void addCustomer(Customer c);
-    public Customer findCustomer(int customerID);
+    public void addCustomer(Customer c) throws NullPointerException;
+    public Customer findCustomer(int customerID) throws IllegalArgumentException;
     
-    public void addProduct(Product p);
-    public Product findProduct(int productID);
+    public void addProduct(Product p) throws NullPointerException;
+    public Product findProduct(int productID) throws IllegalArgumentException;
     
     
     

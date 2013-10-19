@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package discountstrategy;
 
 /**
@@ -48,7 +45,7 @@ public class FlatRateDiscount implements DiscountStrategy{
      * @param discount The discount percentage, a number between 0 and 1.
      */
     @Override
-    public final void setDiscountRate(double discount){
+    public final void setDiscountRate(double discount) throws IllegalArgumentException{
           if(discount < 0 || discount > 1){
             throw new IllegalArgumentException(RATE_ERR);
         }
@@ -60,7 +57,7 @@ public class FlatRateDiscount implements DiscountStrategy{
      * @param minQuantity - The minimum quantity required to receive the discount.
      */
     @Override
-    public final void setMinQuantity(double minQuantity){
+    public final void setMinQuantity(double minQuantity) throws IllegalArgumentException{
         if(minQuantity < 0){
             throw new IllegalArgumentException(QUANTITY_ERR);
         }

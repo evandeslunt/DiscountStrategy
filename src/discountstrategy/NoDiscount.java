@@ -46,7 +46,7 @@ public class NoDiscount implements DiscountStrategy{
      * Throws an <code>IllegalArgumentException</code> if one attempts to change
      * the discount rate on a NoDiscount object. To add a discount, create use 
      * the <code>DiscountFactory</code>.
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException when called.
      */
     @Override
     public final void setDiscountRate(double discount) throws IllegalArgumentException{
@@ -57,10 +57,10 @@ public class NoDiscount implements DiscountStrategy{
      * Throws an <code>IllegalArgumentException</code> if one attempts to change
      * the minimum quantity on a NoDiscount object. To add a discount, create use 
      * the <code>DiscountFactory</code>.
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException when called.
      */
     @Override
-    public final void setMinQuantity(double quantity){
+    public final void setMinQuantity(double quantity) throws IllegalArgumentException{
         throw new IllegalArgumentException(QUANTITY_ERR);
     }
     

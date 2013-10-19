@@ -12,10 +12,10 @@ package discountstrategy;
  */
 public interface AddressStrategy {
     
-    public void setToAttn(String toAttn);
-    public void setLineOne(String lineOne);
-    public void setLineTwo(String lineTwo);
-    public void setCity(String city);
+    public void setToAttn(String toAttn) throws IllegalArgumentException, NullPointerException;
+    public void setLineOne(String lineOne) throws IllegalArgumentException, NullPointerException;
+    public void setLineTwo(String lineTwo) throws IllegalArgumentException, NullPointerException;
+    public void setCity(String city) throws IllegalArgumentException, NullPointerException;
     
     public String getToAttn();
     public String getLineOne();

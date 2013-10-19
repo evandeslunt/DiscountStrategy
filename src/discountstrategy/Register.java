@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package discountstrategy;
 
 /**
@@ -23,6 +20,7 @@ public class Register {
      */
     public Register(int customerID){
         receipt = new PrintedReceipt(customerID);
+
     }
     
     /**
@@ -50,7 +48,7 @@ public class Register {
     }
     
     public final void printReceipt(){
-        receipt.printReceipt();
+        System.out.println(receipt.getReceipt());
     }
     
    

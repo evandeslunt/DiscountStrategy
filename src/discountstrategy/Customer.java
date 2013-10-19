@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package discountstrategy;
 
 /**
@@ -93,14 +90,14 @@ public class Customer {
     
     // setters
     
-    public final void setCustomerID(int id) {
+    public final void setCustomerID(int id) throws IllegalArgumentException{
        if(id <= 0){
            throw new IllegalArgumentException(ID_ERR);
        }
        this.customerID = id;
     }
     
-    public final void setFirstName(String firstName) {
+    public final void setFirstName(String firstName) throws IllegalArgumentException, NullPointerException{
        if(firstName == null ){
            throw new NullPointerException(FIRST_NAME_ERR);
        } else if (firstName.length() == 0){
@@ -109,7 +106,7 @@ public class Customer {
        this.firstName = firstName;
     }
     
-    public final void setLastName(String lastName) {
+    public final void setLastName(String lastName) throws IllegalArgumentException, NullPointerException{
         if(lastName == null ){
            throw new NullPointerException(LAST_NAME_ERR);
        } else if (lastName.length() == 0){
@@ -118,14 +115,14 @@ public class Customer {
        this.lastName = lastName;
     }
     
-    public final void addShippingAddress(AddressStrategy address){
+    public final void addShippingAddress(AddressStrategy address) throws  NullPointerException{
         if(address == null){
             throw new NullPointerException(ADDR_ERR);
         }
         add(shippingAddresses, address);
     }
     
-    public final void addBillingAddress(AddressStrategy address){
+    public final void addBillingAddress(AddressStrategy address) throws NullPointerException{
         if(address == null){
             throw new NullPointerException(ADDR_ERR);
         }
@@ -140,7 +137,7 @@ public class Customer {
        * @param array 
        * @param o 
        */
-    private void add(AddressStrategy[] array, AddressStrategy o){
+    private void add(AddressStrategy[] array, AddressStrategy o) throws NullPointerException{
         if(o == null){
             throw new NullPointerException();
         }
@@ -155,7 +152,10 @@ public class Customer {
      * Manual array resize. Adds one extra slot to the end of the array.
      * @param array The array to resize
      */
-    private AddressStrategy[] expandArray(AddressStrategy[] array){
+    private AddressStrategy[] expandArray(AddressStrategy[] array) throws NullPointerException{
+        if(array == null){
+            throw new NullPointerException();
+        }
         AddressStrategy[] tmp = new AddressStrategy[array.length + 1];
         
         for(int i = 0; i < array.length; i++){

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package discountstrategy;
 
 /**
@@ -12,17 +9,17 @@ package discountstrategy;
 public interface Product {
     
     public String getDescription();
-    public void setDescription(String description);
+    public void setDescription(String description) throws IllegalArgumentException, NullPointerException;
     
     public double getPrice();
-    public void setPrice(double price);
+    public void setPrice(double price) throws IllegalArgumentException;
     
     public int getProductID();
-    public void setProductID(int prodID);
+    public void setProductID(int prodID) throws IllegalArgumentException;
     
     public double getDiscountRate();
     
     public DiscountStrategy getDiscountType();
-    public void setDiscountType(DiscountStrategy discount);
+    public void setDiscountType(DiscountStrategy discount) throws NullPointerException;
     
 }

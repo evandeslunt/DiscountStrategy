@@ -69,10 +69,11 @@ public class JavaDatabase implements DatabaseStrategy{
      * Returns the customer with the given customerID, or throws exception if
      * the customer was not found.
      * @param customerID An integer greater than or equal to 0
-     * @return 
+     * @return The Customer object matching the customerID, or null if the
+     * Customer is not found.
      */
     @Override
-    public final Customer findCustomer(int customerID) {
+    public final Customer findCustomer(int customerID) throws IllegalArgumentException{
        if(customerID < 0){
            throw new IllegalArgumentException(CUST_ID_ERR);
        }
@@ -83,18 +84,19 @@ public class JavaDatabase implements DatabaseStrategy{
                return customer;
            }
        }
-       //if the customer isn't found, throw a "not-found" exception
-       throw new NullPointerException(CUST_NOT_FOUND);
+       //if the customer isn't found, return null
+       return null;
     }
 
 
     /**
       * Returns the product with the given productID, or null if not found.
       * @param productID
-      * @return 
+      * @return The Product object matching the given productID, or null if the
+      * product isn't found.
       */
     @Override
-    public final Product findProduct(int productID){
+    public final Product findProduct(int productID) throws IllegalArgumentException{
         if(productID < 0){
             throw new IllegalArgumentException(PROD_ID_ERR);
         } 
@@ -107,8 +109,8 @@ public class JavaDatabase implements DatabaseStrategy{
             }
         }
 
-        //if the product isn't found, throw a "not-found" exception.
-        throw new NullPointerException(PROD_NOT_FOUND);
+        //if the product isn't found,return null
+        return null;
   }
 
         /**
@@ -116,7 +118,7 @@ public class JavaDatabase implements DatabaseStrategy{
          * @param c A Customer object.
          */
         @Override
-        public final void addCustomer(Customer c){
+        public final void addCustomer(Customer c) throws NullPointerException{
             if(c == null){
                 throw new NullPointerException(CUST_ENTRY_ERR);
             }
@@ -128,7 +130,7 @@ public class JavaDatabase implements DatabaseStrategy{
          * Sets the customers array to the given array.
          * @param customers A Customer[] array
          */
-         public final void setCustomerList(Customer[] customers){
+         public final void setCustomerList(Customer[] customers) throws NullPointerException{
              if(customers == null){
                  throw new NullPointerException();
              }
@@ -141,7 +143,7 @@ public class JavaDatabase implements DatabaseStrategy{
           * @param p 
           */
         @Override
-        public final void addProduct(Product p){
+        public final void addProduct(Product p) throws NullPointerException{
             if(p == null){
                 throw new NullPointerException(PROD_ENTRY_ERR);
             } 
@@ -153,7 +155,7 @@ public class JavaDatabase implements DatabaseStrategy{
          * Sets the products array to the given array.
          * @param products A Product[] array.
          */
-        public final void setProductList(Product[] products){
+        public final void setProductList(Product[] products) throws NullPointerException{
             if(products == null){
                 throw new NullPointerException(PROD_ARRAY_ERR);
             }

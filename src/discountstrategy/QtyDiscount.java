@@ -44,7 +44,7 @@ public class QtyDiscount implements DiscountStrategy {
      * @param discount The discount percentage, a number between 0 and 1.
      */
     @Override
-    public final void setDiscountRate(double discount){
+    public final void setDiscountRate(double discount) throws IllegalArgumentException{
         if(discount < 0 || discount > 1){
             throw new IllegalArgumentException(RATE_ERR);
         }
@@ -57,7 +57,7 @@ public class QtyDiscount implements DiscountStrategy {
      * discounted rate.
      */
     @Override
-    public final void setMinQuantity(double quantity){
+    public final void setMinQuantity(double quantity) throws IllegalArgumentException{
         if(quantity < 2){
             throw new IllegalArgumentException(QTY_ERR);
         }
@@ -68,7 +68,7 @@ public class QtyDiscount implements DiscountStrategy {
      * Sets the actual quantity purchased.
      * @param quantity - The quantity of items purchased.
      */
-    public final void setActualQuantity(int quantity){
+    public final void setActualQuantity(int quantity) throws IllegalArgumentException{
          if(quantity <= 0){
             throw new IllegalArgumentException(QTY_ERR);
         }

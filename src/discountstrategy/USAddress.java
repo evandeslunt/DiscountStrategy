@@ -55,7 +55,7 @@ public class USAddress implements AddressStrategy {
     // setters
     
     @Override
-    public final void setToAttn(String toAttn){
+    public final void setToAttn(String toAttn) throws IllegalArgumentException, NullPointerException{
         if(toAttn == null){
             throw new NullPointerException(ENTRY_ERR + "toAttn");
         } else if(toAttn.length() == 0){
@@ -65,7 +65,7 @@ public class USAddress implements AddressStrategy {
         
     }
     @Override
-    public final void setLineOne(String lineOne){
+    public final void setLineOne(String lineOne) throws IllegalArgumentException, NullPointerException{
          if(lineOne == null){
             throw new NullPointerException(ENTRY_ERR + "lineOne");
         } else if(lineOne.length() == 0){
@@ -74,7 +74,7 @@ public class USAddress implements AddressStrategy {
         this.lineOne = lineOne;
     }
     @Override
-    public final void setLineTwo(String lineTwo){
+    public final void setLineTwo(String lineTwo) throws IllegalArgumentException, NullPointerException{
          if(lineTwo == null){
             throw new NullPointerException(ENTRY_ERR + "lineTwo");
         } else if(lineTwo.length() == 0){
@@ -83,7 +83,7 @@ public class USAddress implements AddressStrategy {
         this.lineTwo = lineTwo;
     }
     @Override
-    public final void setCity(String city){
+    public final void setCity(String city) throws IllegalArgumentException, NullPointerException{
          if(city == null){
             throw new NullPointerException(ENTRY_ERR + "city");
         } else if(city.length() == 0){
@@ -91,7 +91,7 @@ public class USAddress implements AddressStrategy {
         }
         this.city = city;
     }
-    public final void setState(String state){
+    public final void setState(String state) throws IllegalArgumentException, NullPointerException{
         if(state == null){
             throw new NullPointerException(ENTRY_ERR + "state");
         } else if(!(validateState(state))){
@@ -99,7 +99,7 @@ public class USAddress implements AddressStrategy {
         }
         this.state = state;
     }
-    public final void setZip(String zip){
+    public final void setZip(String zip) throws IllegalArgumentException, NullPointerException{
          if(zip == null){
             throw new NullPointerException(ENTRY_ERR + "zip");
          } else if(!(validateZipContents(zip))){
@@ -159,7 +159,7 @@ public class USAddress implements AddressStrategy {
      * Returns true iff each character in the zip String is a digit, otherwise
      * returns false.
      */
-    private boolean validateZipContents(String zip){
+    private boolean validateZipContents(String zip) throws NullPointerException{
         if(zip == null){
             return false;
         }
@@ -184,7 +184,12 @@ public class USAddress implements AddressStrategy {
      * @param state
      * @return 
      */
-    private boolean validateState(String state){
+    private boolean validateState(String state) throws IllegalArgumentException, NullPointerException{
+        if(state == null){
+            throw new NullPointerException(STATE_FORMAT_ERR);
+        } else if (state.length() == 0){
+            throw new IllegalArgumentException(STATE_FORMAT_ERR);
+        }
         //if you find the state, return true
         for(int i = 0; i < US_StateList.US_STATE_LIST.length; i++){
             if(state.equals(US_StateList.US_STATE_LIST[i])){
