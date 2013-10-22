@@ -21,6 +21,7 @@ public class JavaDatabase implements DatabaseStrategy{
     private final static String PROD_NOT_FOUND = "That product was not found.";
     
     private Product[] products;
+    private final static int INIT_ARRAY_SIZE = 10;
     
     // hard-coded data
      private USAddress garyShipAddress = new USAddress("Gary Zivney", "123 Easy Street", 
@@ -43,28 +44,10 @@ public class JavaDatabase implements DatabaseStrategy{
      */
     public JavaDatabase(){    
         initializeProductsArray();
+        initializeCustomerArray();
     }
     
-    private void initializeProductsArray(){
-        DiscountFactory discFact = new DiscountFactory();
-        DiscountStrategy noDisc = discFact.getDiscount(DiscountFactory.DISCOUNT_TYPE.NONE, 0, 0);
-        DiscountStrategy flatRate = discFact.getDiscount(DiscountFactory.DISCOUNT_TYPE.FLAT_RATE, .1, 1);
-        
-        ProductFactory fact = new ProductFactory();
-        Product blackBootsWomen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Women's black boots", 79.99, flatRate);
-        Product blackBootsMen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Men's black boots", 64.99, flatRate);
-        Product brownBootsWomen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Women's brown boots", 59.99, flatRate);
-        Product dressShoesWomen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Women's dress shoes", 59.99, noDisc);
-        Product dressShoesMen = fact.getProduct(ProductFactory.PROD_TYPE.CLOTHING, "Men's dress shoes", 59.99, noDisc);
-        
-        products = new Product[10];
-        addProduct(blackBootsWomen);
-        addProduct(blackBootsMen);
-        addProduct(brownBootsWomen);
-        addProduct(dressShoesWomen);
-        addProduct(dressShoesMen);
-        
-    }
+    
     /**
      * Returns the customer with the given customerID, or throws exception if
      * the customer was not found.
@@ -126,16 +109,16 @@ public class JavaDatabase implements DatabaseStrategy{
             add(customers, c);
         }
 
-        /**
-         * Sets the customers array to the given array.
-         * @param customers A Customer[] array
-         */
-         public final void setCustomerList(Customer[] customers) throws NullPointerException{
-             if(customers == null){
-                 throw new NullPointerException();
-             }
-             this.customers = customers;
-         }
+//        /**
+//         * Sets the customers array to the given array.
+//         * @param customers A Customer[] array
+//         */
+//         public final void setCustomerList(Customer[] customers) throws NullPointerException{
+//             if(customers == null){
+//                 throw new NullPointerException();
+//             }
+//             this.customers = customers;
+//         }
 
 
          /**
@@ -151,16 +134,16 @@ public class JavaDatabase implements DatabaseStrategy{
             add(products, p);
         }
 
-        /**
-         * Sets the products array to the given array.
-         * @param products A Product[] array.
-         */
-        public final void setProductList(Product[] products) throws NullPointerException{
-            if(products == null){
-                throw new NullPointerException(PROD_ARRAY_ERR);
-            }
-            this.products = products;
-        }
+//        /**
+//         * Sets the products array to the given array.
+//         * @param products A Product[] array.
+//         */
+//        public final void setProductList(Product[] products) throws NullPointerException{
+//            if(products == null){
+//                throw new NullPointerException(PROD_ARRAY_ERR);
+//            }
+//            this.products = products;
+//        }
 
 
 
@@ -195,6 +178,25 @@ public class JavaDatabase implements DatabaseStrategy{
 
           return tmp;
       }
+      
+      /**
+       * Initializes the products array with hard-coded products.
+       * Note: Ideally, this would be read from an input file.
+       */
+        private  void initializeProductsArray(){
+            ProductFactory.PROD_TYPE clothing = ProductFactory.PROD_TYPE.CLOTHING;
+
+            products = new Product[INIT_ARRAY_SIZE];
+            addProduct(ProductFactory.getProduct(clothing, "Blue Jeans", 34.95));
+            addProduct(ProductFactory.getProduct(clothing, "Fancy skirt", 39.95));
+            addProduct(ProductFactory.getProduct(clothing, "Dress Slacks", 45.95));
+            addProduct(ProductFactory.getProduct(clothing, "Khakis", 29.95));
+            addProduct(ProductFactory.getProduct(clothing, "Purple Polo Shirt", 19.95));
+            addProduct(ProductFactory.getProduct(clothing, "Blue Polo Shirt", 19.95));
+
+        }
     
-    
+        private void initializeCustomerArray(){
+            addCustomer(CustomerFactory.getInStoreCustomer("Caitlin", "Brown"));
+        }
 }

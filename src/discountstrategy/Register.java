@@ -22,17 +22,7 @@ public class Register {
         receipt = new PrintedReceipt(customerID);
 
     }
-    
-    /**
-     * Constructor that allows you to pass in a receipt (note: no customerID
-     * is required in this constructor because it is already supplied when the
-     * receipt is initialized.
-     * @param customerID
-     * @param receipt 
-     */
-    public Register(ReceiptStrategy receipt){
-        setReceiptType(receipt);
-    }
+
 
     //public methods
 

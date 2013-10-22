@@ -12,30 +12,21 @@ package discountstrategy;
  */
 public class QtyDiscount implements DiscountStrategy {
     // error messages
-    public final static String RATE_ERR = "Please enter a value between 0 and 1.";
-    public final static String QTY_ERR = "Please enter a number greater than 1.";
-    public final static String MISSING_QTY_ERR = "Please enter the quantity purchased.";
+    public final static String RATE_ERR = "Please enter a discount rate between 0 and 1.";
+    public final static String QTY_ERR = "Please enter a quantity greater than zero.";
     
     // constants
     public final static double NO_DISCOUNT = 0.00;
-    public final static double NOT_INITIALIZED = -1;
     
     // global variables
     private double discountRate;
     private double minQuantity;
-    private double actualQuantity;
     
     public QtyDiscount(double discountRate, int minNumItems){
         setDiscountRate(discountRate);
         setMinQuantity(minNumItems);
-        actualQuantity = NOT_INITIALIZED;
     }
     
-    public QtyDiscount(double discountRate, int minNumItems, int actualNumItems){
-        setDiscountRate(discountRate);
-        setMinQuantity(minNumItems);
-        setActualQuantity(actualNumItems);
-    }
     
     // setters
     
@@ -64,41 +55,40 @@ public class QtyDiscount implements DiscountStrategy {
         this.minQuantity = quantity;
     }
     
-    /**
-     * Sets the actual quantity purchased.
-     * @param quantity - The quantity of items purchased.
-     */
-    public final void setActualQuantity(int quantity) throws IllegalArgumentException{
-         if(quantity <= 0){
-            throw new IllegalArgumentException(QTY_ERR);
-        }
-        this.actualQuantity = quantity;
-    }
-    
     // getters
     
     /**
-     * Returns the discount rate, if the actual number of items purchased is 
-     * greater than the minimum quantity required. Otherwise, returns 0 as the 
-     * discount rate.
-     * If no value has been supplied for the discount, it throws an exception
-     * asking for the quantity purchased (ideally, throws it to user interface,
-     * which would let you enter the quantity purchased and continue).
-     * @return 
+     * Returns the discount rate that would apply if the minimum quantity has
+     * been purchased to qualify for the discount.
+     * @return The discount rate.
      */
     @Override
     public final double getDiscountRate(){
-        if(actualQuantity == NOT_INITIALIZED){
-            throw new IllegalArgumentException(MISSING_QTY_ERR);
-        } else if(actualQuantity < minQuantity){
-            return NO_DISCOUNT;
-        } else{
-            return discountRate;
-        }
+        return discountRate;
     }
     
     @Override
     public final double getMinQuantity(){
         return minQuantity;
+    }
+    
+    /**
+     * Returns the discount rate that applies, given the quantity purchased. 
+     * @param quantity The quantity purchased.
+     * @return The discount rate that applies to the purchase. If the quantity
+     * purchased is less than the minimum required to receive the discount, returns
+     * a value of 0.00 (no discount). If it is greater than or equal to the 
+     * minimum, returns the discount rate.
+     * @throws IllegalArgumentException If the quantity purchased is less than 0.
+     */
+    @Override
+    public final double applyDiscount(int quantity) throws IllegalArgumentException{
+        if(quantity < 0){
+            throw new IllegalArgumentException(QTY_ERR);
+        } else if (quantity < minQuantity){
+            return NO_DISCOUNT;
+        } else {
+            return discountRate;
+        }
     }
 }

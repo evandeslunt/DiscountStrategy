@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package discountstrategy;
 
 /**
@@ -9,55 +5,27 @@ package discountstrategy;
  * @author Liz Ife Van Deslunt
  */
 public class ProductFactory {
+    private static final String PRICE_ERR = "Please supply a price of at least $0.00";
     
-    private int lastProdID = 100;
-    public enum PROD_TYPE {CLOTHING};
+    private static int lastProdID = 100;
+    public static enum PROD_TYPE {CLOTHING};
     
-    /**
-     * Initializes a ProductFactory
-     */
-    public ProductFactory(){
-        
-    }
     
     /**
-     * This method returns a product with all parameters specified.
-     * @param type
-     * @param descr
-     * @param price
-     * @param disc
-     * @return 
+     * Creates a product, given the type, description, and price. Sets the 
+     * discount to NoDiscount by default.
+     * @param type - The type of product, taken from the <code>PROD_TYPE</code>
+     * enumeration.
+     * @param descr - A description of the product
+     * @param price - The price of the product before any discounts are applied.
+     * 
+     * @return A product with the specified type, description, and price.
      */
-    public Product getProduct(PROD_TYPE type, String descr, double price, 
-            DiscountStrategy disc){
-        if(type==null || disc==null || descr == null){
-            throw new NullPointerException();
-        } else if (price < 0){
-            throw new IllegalArgumentException();
-        }
-        switch (type){
-            case CLOTHING:
-                lastProdID++;
-                return new ClothingProduct(lastProdID, descr, price, disc);
-            default:
-                return null;
-        }
-                
-    }
-    
-     /**
-     * This method returns a product with a default discount of NoDiscount.
-     * @param type
-     * @param descr
-     * @param price
-     * @param disc
-     * @return 
-     */
-    public Product getProduct(PROD_TYPE type, String descr, double price){
+    public static Product getProduct(PROD_TYPE type, String descr, double price){
         if(type==null || descr == null){
             throw new NullPointerException();
         } else if (price < 0){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(PRICE_ERR);
         }
         switch (type){
             case CLOTHING:
@@ -68,5 +36,6 @@ public class ProductFactory {
         }
                 
     }
+    
     
 }

@@ -64,5 +64,18 @@ public class NoDiscount implements DiscountStrategy{
         throw new IllegalArgumentException(QUANTITY_ERR);
     }
     
+    /**
+     * Returns the discount rate (0.00), representing no discount.
+     * @param quantity The quantity purchased.
+     * @return The discount rate of 0.00.
+     * @throws IllegalArgumentException If the quantity purchased is less than 0.
+     */
+    @Override
+    public final double applyDiscount(int quantity) throws IllegalArgumentException{
+        if(quantity < 0){
+            throw new IllegalArgumentException(QUANTITY_ERR);
+        }
+        return discountRate;
+    }
     
 }
