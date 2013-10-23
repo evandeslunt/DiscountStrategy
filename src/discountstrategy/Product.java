@@ -22,4 +22,17 @@ public interface Product {
     public DiscountStrategy getDiscountType();
     public void setDiscountType(DiscountStrategy discount) throws NullPointerException;
     
+    /**
+     * Returns the effective discount rate (e.g., if the discount requires a
+     * purchase of at least 5 items, but the customer has only purchased 4 items,
+     * returns a discount rate of 0. If they purchased 5 items, returns the 
+     * discounted rate.
+     * @param quantity
+     * @return
+     * @throws IllegalArgumentException 
+     */
+    public double applyDiscount(int quantity) throws IllegalArgumentException;
+    
+    public String toString();
+    
 }

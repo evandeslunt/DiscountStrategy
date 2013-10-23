@@ -21,7 +21,8 @@ public class JavaDatabase implements DatabaseStrategy{
     private final static String PROD_NOT_FOUND = "That product was not found.";
     
     private Product[] products;
-    private final static int INIT_ARRAY_SIZE = 10;
+    private final static int INIT_ARRAY_SIZE = 1;
+    
     
     // hard-coded data
      private USAddress garyShipAddress = new USAddress("Gary Zivney", "123 Easy Street", 
@@ -158,10 +159,15 @@ public class JavaDatabase implements DatabaseStrategy{
           if(o == null){
               throw new NullPointerException();
           }
-          if(array[array.length - 1] == null){
-              expandArray(array);
+          System.out.println("adding: " + o.toString());
+          if(array[array.length - 1] != null){
+              array = expandArray(array);
+              System.out.println("EXPANDED array size = " + array.length);
           }
+          System.out.println("array size = " + array.length);
           array[array.length - 1] = o;
+          
+
       }
 
 
@@ -175,7 +181,7 @@ public class JavaDatabase implements DatabaseStrategy{
           for(int i = 0; i < array.length; i++){
               tmp[i] = array[i];
           }
-
+          System.out.println("EXPANDING-----SIZE = " + tmp.length);
           return tmp;
       }
       
@@ -193,10 +199,17 @@ public class JavaDatabase implements DatabaseStrategy{
             addProduct(ProductFactory.getProduct(clothing, "Khakis", 29.95));
             addProduct(ProductFactory.getProduct(clothing, "Purple Polo Shirt", 19.95));
             addProduct(ProductFactory.getProduct(clothing, "Blue Polo Shirt", 19.95));
+            
+            System.out.println("The available products are: " + products.length);
+            for(Product prod : products){
+                System.out.println(prod.toString());
+            }
 
         }
     
         private void initializeCustomerArray(){
             addCustomer(CustomerFactory.getInStoreCustomer("Caitlin", "Brown"));
+            
+            
         }
 }

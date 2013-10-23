@@ -50,7 +50,7 @@ public class LineItem {
      * @return 
      */
     public final double getDiscountRate(){
-        return product.getDiscountRate();
+        return product.applyDiscount(quantity);
     }
     
     /**

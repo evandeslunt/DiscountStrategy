@@ -12,7 +12,7 @@ public class ClothingProduct implements Product{
     private final static String DESCR_ERR = "Please enter a description for this product.";
     private final static String PRICE_ERR = "Please enter a price greater than $0.00.";
     private final static String DISCOUNT_ERR = "Please supply a discount for this product.";
-    
+    private final static String QTY_ERR = "Please enter a quantity at least 0.";
     // constants
     
     // global variables
@@ -90,5 +90,42 @@ public class ClothingProduct implements Product{
     public final DiscountStrategy getDiscountType() {
        return discount;
     }
+    
+    @Override
+    public final double applyDiscount(int quantity) throws IllegalArgumentException{
+        if(quantity < 0){
+            throw new IllegalArgumentException(QTY_ERR);
+        }
+        return discount.applyDiscount(quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "ClothingProduct{" + "prodID=" + prodID + ", description=" + description + ", price=" + price + ", discount=" + discount + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + this.prodID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ClothingProduct other = (ClothingProduct) obj;
+        if (this.prodID != other.prodID) {
+            return false;
+        }
+        return true;
+    }
+
+    
 
 }
