@@ -35,7 +35,7 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
      * @throws NullPointerException If the customer object passed in is null.
      */
     @Override
-    public void addCustomer(Customer customer) throws NullPointerException {
+    public final void addCustomer(Customer customer) throws NullPointerException {
         if(customer==null){
             throw new NullPointerException(CUST_ENTRY_ERR);
         }
@@ -53,7 +53,7 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
      * the given customerID.
      */
     @Override
-    public Customer findCustomer(int customerID) throws IllegalArgumentException, NotFoundException {
+    public final Customer findCustomer(int customerID) throws IllegalArgumentException, NotFoundException {
         if(customerID < 0){
             throw new IllegalArgumentException(CUST_ID_ERR);
         } else if (!customers.containsKey(customerID)){
@@ -69,7 +69,7 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
      * @throws NullPointerException If the product is null.
      */
     @Override
-    public void addProduct(Product product) throws NullPointerException {
+    public final void addProduct(Product product) throws NullPointerException {
         if(product==null){
             throw new NullPointerException(PROD_ENTRY_ERR);
         } 
@@ -87,7 +87,7 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
      * database.
      */
     @Override
-    public Product findProduct(int productID) throws IllegalArgumentException, NotFoundException {
+    public final Product findProduct(int productID) throws IllegalArgumentException, NotFoundException {
         if(productID < 0){
             throw new IllegalArgumentException(PROD_ID_ERR);
         }
@@ -105,10 +105,10 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
         ProductFactory.PROD_TYPE clothing = ProductFactory.PROD_TYPE.CLOTHING;
 
         products = new HashMap<Integer,Product>();
-        addProduct(ProductFactory.getProduct(clothing, "Blue Jeans", 34.95));
-        addProduct(ProductFactory.getProduct(clothing, "Fancy skirt", 39.95));
-        addProduct(ProductFactory.getProduct(clothing, "Dress Slacks", 45.95));
-        addProduct(ProductFactory.getProduct(clothing, "Khakis", 29.95));
+        addProduct(ProductFactory.getProduct(clothing, "Blue Jeans\t", 34.95));
+        addProduct(ProductFactory.getProduct(clothing, "Fancy skirt\t", 39.95));
+        addProduct(ProductFactory.getProduct(clothing, "Dress Slacks\t", 45.95));
+        addProduct(ProductFactory.getProduct(clothing, "Khakis\t\t", 29.95));
         addProduct(ProductFactory.getProduct(clothing, "Purple Polo Shirt", 19.95));
         addProduct(ProductFactory.getProduct(clothing, "Blue Polo Shirt", 19.95));
         
@@ -124,6 +124,7 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
         AddressStrategy addr3 = new USAddress("Fyoder Dostoevsky","47 E. Gorham Street", "Madison", "WI", "53703");
         AddressStrategy addr4 = new USAddress("Ada Lovelace","1 Kinikinnic Ave", "Milwaukee", "WI", "53202");
         
+        customers = new HashMap<Integer,Customer>();
         addCustomer(CustomerFactory.getCustomerWithAddress("Fyoder", "Dostoevsky", addr1, addr1));    
         addCustomer(CustomerFactory.getCustomerWithAddress("Aleksandr", "Pushkin", addr2, addr3));
         addCustomer(CustomerFactory.getCustomerWithAddress("Ada", "Lovelace", addr4, addr4));

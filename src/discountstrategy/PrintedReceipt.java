@@ -8,11 +8,13 @@ import java.util.*;
  * @author Liz Ife Van Deslunt
  */
 public class PrintedReceipt implements ReceiptStrategy{
+    //errors
     private final static String QTY_ERR = "Please supply a quantity purchased greater than 0.";
     private final static String DB_ERR = "Please supply a valid database.";
     private final static String CUST_NOT_FOUND_ERR = "That customer ID is not on file.";
     private final static String PROD_NOT_FOUND_ERR = "That product ID is not on file.";
     
+    //constants for formatting/printing receipt
     private final String headerRow = "ITEM #\t DESCR\t\t UNIT PRICE\t "
             + "QTY\t EXT.PRICE\t DISCOUNT\t TOTAL";
     private final String tabsForTotals = "\nGRAND TOTALS: \t\t\t\t\t" ;
@@ -23,17 +25,33 @@ public class PrintedReceipt implements ReceiptStrategy{
     private NumberFormat percentFormatter = NumberFormat.getPercentInstance();
     private Calendar transDate;
     
+    //global variables
     private Customer customer;
     private LineItem[] lineItems;
     private DatabaseStrategy db;
     
-    
+    /**
+     * Constructor that accepts a customer ID and uses the default database.
+     * @param customerID The customer making the purchase.
+     */
     public PrintedReceipt(int customerID){
-        setDatabase(new JavaDatabase()); // set the database here. we can change it later with the setDatabase method if we need to
+        setDatabase(new JavaDatabaseWithCollection()); 
         setCustomer(customerID);
         lineItems = new LineItem[INIT_LINE_ITEM_ARRAY_SIZE];
         transDate = Calendar.getInstance(); //set the transaction date to now.
         
+    }
+    
+    /**
+     * Constructor that accepts a database and customer ID.
+     * @param customerID - The customer making the purchase.
+     * @param db - The database to use.
+     */
+    public PrintedReceipt(int customerID, DatabaseStrategy db){
+        setDatabase(db);
+        setCustomer(customerID);
+        lineItems = new LineItem[INIT_LINE_ITEM_ARRAY_SIZE];
+        transDate = Calendar.getInstance(); //set the transaction date to now.
     }
     
     //getters  
@@ -171,7 +189,7 @@ public class PrintedReceipt implements ReceiptStrategy{
         return formattedDate;
     }
     
-        /**
+    /**
      * Verifies that the customerID matches a customer in the database.
      * @param customerID - The customerID of the customer making the purchase.
      * @return True if the customer is in the database; false otherwise.
@@ -185,7 +203,7 @@ public class PrintedReceipt implements ReceiptStrategy{
             }
         } catch(IllegalArgumentException e){
             return false;
-        }
+        } 
     }
     
     /**
