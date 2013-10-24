@@ -102,15 +102,25 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
      * later version, I would lIke to read from a file.
      */
     private void initializeProducts(){
+        //Discounts
+        DiscountFactory.DISCOUNT_TYPE flatRate = DiscountFactory.DISCOUNT_TYPE.FLAT_RATE;
+        DiscountFactory.DISCOUNT_TYPE quantity = DiscountFactory.DISCOUNT_TYPE.QUANTITY;
+         
+        DiscountStrategy flatRateTen = DiscountFactory.getDiscount(flatRate, .1, 1);
+        DiscountStrategy flatRateFifteen = DiscountFactory.getDiscount(flatRate, .15, 1);
+        DiscountStrategy flatRateTwenty = DiscountFactory.getDiscount(flatRate, .2, 1);
+        DiscountStrategy quantityFifty = DiscountFactory.getDiscount(quantity, .5, 5);
+        
+        //prodcuts
         ProductFactory.PROD_TYPE clothing = ProductFactory.PROD_TYPE.CLOTHING;
-
+        
         products = new HashMap<Integer,Product>();
-        addProduct(ProductFactory.getProduct(clothing, "Blue Jeans\t", 34.95));
-        addProduct(ProductFactory.getProduct(clothing, "Fancy skirt\t", 39.95));
+        addProduct(ProductFactory.getProduct(clothing, "Blue Jeans\t", 34.95, flatRateTen));
+        addProduct(ProductFactory.getProduct(clothing, "Fancy skirt\t", 39.95, flatRateFifteen));
         addProduct(ProductFactory.getProduct(clothing, "Dress Slacks\t", 45.95));
-        addProduct(ProductFactory.getProduct(clothing, "Khakis\t\t", 29.95));
-        addProduct(ProductFactory.getProduct(clothing, "Purple Polo Shirt", 19.95));
-        addProduct(ProductFactory.getProduct(clothing, "Blue Polo Shirt", 19.95));
+        addProduct(ProductFactory.getProduct(clothing, "Khakis\t\t", 29.95, flatRateTwenty));
+        addProduct(ProductFactory.getProduct(clothing, "Purple Polo Shirt", 19.95, quantityFifty));
+        addProduct(ProductFactory.getProduct(clothing, "Blue Polo Shirt", 19.95, quantityFifty));
         
     }
     
@@ -129,4 +139,5 @@ public class JavaDatabaseWithCollection implements DatabaseStrategy{
         addCustomer(CustomerFactory.getCustomerWithAddress("Aleksandr", "Pushkin", addr2, addr3));
         addCustomer(CustomerFactory.getCustomerWithAddress("Ada", "Lovelace", addr4, addr4));
     }
+    
 }

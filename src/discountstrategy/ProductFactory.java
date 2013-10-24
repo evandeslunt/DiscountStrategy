@@ -37,5 +37,31 @@ public class ProductFactory {
                 
     }
     
+    /**
+     * Creates a product given the type, description, price, and discount. 
+     * @param type - The type of product, taken from the <code>PROD_TYPE</code>
+     * enumeration.
+     * @param descr - A description of the product.
+     * @param price - The price of the product before any discounts are applied.
+     * @param discount - A <code>DiscountStrategy</code> object representing
+     * the discount.
+     * @return A product with the specified type, description, and price.
+     */
+    public static Product getProduct(PROD_TYPE type, String descr, double price
+            , DiscountStrategy discount){
+        if(type==null || descr == null || discount == null){
+            throw new NullPointerException();
+        } else if (price < 0){
+            throw new IllegalArgumentException(PRICE_ERR);
+        }
+        switch (type){
+            case CLOTHING:
+                lastProdID++;
+                return new ClothingProduct(lastProdID, descr, price, discount);
+            default:
+                return null;
+        }
+                
+    }
     
 }

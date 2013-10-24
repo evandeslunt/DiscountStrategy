@@ -8,7 +8,7 @@ package discountstrategy;
  */
 public class DiscountFactory {
     
-    public enum DISCOUNT_TYPE {FLAT_RATE, QUANTITY, NONE};
+    public static enum DISCOUNT_TYPE {FLAT_RATE, QUANTITY, NONE};
    
      
     /**
@@ -19,7 +19,7 @@ public class DiscountFactory {
      * (for quantity discounts)
      * @return A DiscountStrategy object.
      */
-    public DiscountStrategy getDiscount(DISCOUNT_TYPE type, double discountRate, 
+    public static DiscountStrategy getDiscount(DISCOUNT_TYPE type, double discountRate, 
             int quantity){
         switch(type){
             case FLAT_RATE:
